@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "RESTful API for finance application.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LadyBluenotes/how-much-leftover.git"
+  },
+  "keywords": [
+    "RESTful",
+    "API"
+  ],
+  "author": "Sarah Gerrard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LadyBluenotes/how-much-leftover/issues"
+  },
+  "homepage": "https://github.com/LadyBluenotes/how-much-leftover#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.2",
+    "nodemon": "^2.0.20",
+    "validator": "^13.9.0"
+  }
+}
