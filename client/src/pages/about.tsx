@@ -1,11 +1,9 @@
 import { Image, Text, Container, ThemeIcon, Title, SimpleGrid, createStyles } from '@mantine/core';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
+import { IconWallet, IconCashBanknote, IconBrandCashapp } from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    paddingTop: 80,
+    paddingTop: 60,
     paddingBottom: 50,
   },
 
@@ -66,7 +64,7 @@ export default function About() {
       <Text className={classes.supTitle}>About TMF</Text>
 
       <Title className={classes.title} order={2}>
-         Track My Funds is<span className={classes.highlight}>not</span> just a money manager
+         Track My Funds is <span className={classes.highlight}>not</span> just a money manager
       </Title>
 
       <Container size={660} p={0}>
@@ -83,7 +81,7 @@ export default function About() {
       >
         <div className={classes.item}>
             <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <AccessAlarmIcon />
+                <IconCashBanknote />
             </ThemeIcon>
 
             <div>
@@ -97,7 +95,7 @@ export default function About() {
         </div>
         <div className={classes.item}>
             <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <AccountBalanceWalletIcon />
+                <IconWallet />
             </ThemeIcon>
 
             <div>
@@ -111,7 +109,7 @@ export default function About() {
         </div>
         <div className={classes.item}>
             <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <CreditCardIcon />
+                <IconBrandCashapp />
             </ThemeIcon>
 
             <div>

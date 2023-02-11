@@ -26,9 +26,9 @@ export default function App(props: AppProps) {
           if user is logged in, render <Nav />
           else render <LandingNav />
           */ }
-        <LandingNav />
-        <Component {...pageProps} />
-        <Footer />
+          <LandingNav />
+          <Component {...pageProps} />
+          <Footer />
       </MantineProvider>
     </>
   );

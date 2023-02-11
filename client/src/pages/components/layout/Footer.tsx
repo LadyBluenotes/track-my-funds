@@ -7,23 +7,19 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
     backgroundColor: theme.colors.gray[1],
+    position: 'static',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 
   inner: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-
-    [theme.fn.smallerThan('xs')]: {
-      flexDirection: 'column',
-    },
-  },
-
-  links: {
-    [theme.fn.smallerThan('xs')]: {
-      marginTop: theme.spacing.md,
-    },
-  },
+    minHeight: 100,
+    padding: [theme.spacing.md, theme.spacing.xl], 
+  }
 }));
 
 export default function Footer() {
@@ -51,7 +47,7 @@ export default function Footer() {
     <div className={classes.footer}>
       <Container className={classes.inner}>
         <Image src="/smallLogo.jpg" alt="logo" width={100} height={85} />
-        <Group className={classes.links}>{items}</Group>
+        <Group>{items}</Group>
       </Container>
     </div>
   );
