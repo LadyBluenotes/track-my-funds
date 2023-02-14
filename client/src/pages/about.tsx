@@ -1,127 +1,55 @@
-import { Image, Text, Container, ThemeIcon, Title, SimpleGrid, createStyles } from '@mantine/core';
-import { IconWallet, IconCashBanknote, IconBrandCashapp } from '@tabler/icons-react';
+import { CreditCardIcon, BanknotesIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
 
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    paddingTop: 60,
-    paddingBottom: 50,
+const features = [
+  {
+    name: 'Tracking your income',
+    description:
+      'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
+    icon: BanknotesIcon,
   },
-
-  item: {
-    display: 'flex',
+  {
+    name: 'Manage your expenses',
+    description:
+      'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
+    icon: CreditCardIcon,
   },
-
-  itemIcon: {
-    padding: theme.spacing.xs,
-    marginRight: theme.spacing.md,
+  {
+    name: 'Break the cycle',
+    description:
+      'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
+    icon: CurrencyDollarIcon,
   },
+]
 
-  itemTitle: {
-    marginBottom: theme.spacing.xs / 2,
-  },
-
-  supTitle: {
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    fontWeight: 800,
-    fontSize: theme.fontSizes.sm,
-    color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
-    letterSpacing: 0.5,
-  },
-
-  title: {
-    lineHeight: 1,
-    textAlign: 'center',
-    marginTop: theme.spacing.xl,
-  },
-
-  description: {
-    textAlign: 'center',
-    marginTop: theme.spacing.xs,
-  },
-
-  highlight: {
-    backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-    padding: 5,
-    paddingTop: 0,
-    borderRadius: theme.radius.sm,
-    display: 'inline-block',
-    color: theme.colorScheme === 'dark' ? theme.white : 'inherit',
-  },
-}));
-
-interface FeatureImage {
-  image: string;
-  title: React.ReactNode;
-  description: React.ReactNode;
-}
-
-export default function About() {
-  const { classes } = useStyles();
-
+export default function Example() {
   return (
-    <Container size={700} className={classes.wrapper}>
-      <Text className={classes.supTitle}>About TMF</Text>
-
-      <Title className={classes.title} order={2}>
-         Track My Funds is <span className={classes.highlight}>not</span> just a money manager
-      </Title>
-
-      <Container size={660} p={0}>
-        <Text color="dimmed" className={classes.description}>
-            At Track My Funds, we believe that managing your finances should be simple and stress-free. That's why we've designed our app with ease of use in mind. Whether you're a seasoned finance expert or just starting out, you'll find everything you need to take control of your finances and reach your financial goals.
-        </Text>
-      </Container>
-
-      <SimpleGrid
-        cols={2}
-        spacing={50}
-        breakpoints={[{ maxWidth: 550, cols: 1, spacing: 40 }]}
-        style={{ marginTop: 30 }}
-      >
-        <div className={classes.item}>
-            <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <IconCashBanknote />
-            </ThemeIcon>
-
-            <div>
-                <Text weight={700} size="lg" className={classes.itemTitle}>
-                Feature 1
-                </Text>
-                <Text color="dimmed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nunc in nisl aliquet, nec lacinia nunc aliquam.
-                </Text>
-            </div>
+    <div className="h-[calc(100vh-74px)] overflow-auto bg-gradient-to-br from-white to-indigo-200 py-10">
+      <div className="mx-auto max-w-7xl px-3 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <h2 className="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Manage money better</h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            A better way to manage your finances
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+          Track My Funds makes managing your finances should be simple and stress-free. Whether you're a seasoned finance expert or just starting out, you'll find everything you need to take control of your finances and reach your financial goals.
+          </p>
         </div>
-        <div className={classes.item}>
-            <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <IconWallet />
-            </ThemeIcon>
-
-            <div>
-                <Text weight={700} size="lg" className={classes.itemTitle}>
-                Feature 2
-                </Text>
-                <Text color="dimmed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nunc in nisl aliquet, nec lacinia nunc aliquam.
-                </Text>
-            </div>
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+          <dl className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+            {features.map((feature) => (
+              <div key={feature.name} className="relative pl-16">
+                <dt className="text-base font-semibold leading-7 text-gray-900">
+                  <div className="absolute top-0 left-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                    <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                  </div>
+                  {feature.name}
+                </dt>
+                <dd className="mt-2 text-base leading-7 text-gray-600">{feature.description}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        <div className={classes.item}>
-            <ThemeIcon variant="light" className={classes.itemIcon} size={60} radius="md">
-                <IconBrandCashapp />
-            </ThemeIcon>
-
-            <div>
-                <Text weight={700} size="lg" className={classes.itemTitle}>
-                Feature 3
-                </Text>
-                <Text color="dimmed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nunc in nisl aliquet, nec lacinia nunc aliquam.
-                </Text>
-            </div>
-        </div>
-      </SimpleGrid>
-    </Container>
-  );
+      </div>
+    </div>
+  )
 }
