@@ -28,10 +28,10 @@ export default function Example() {
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Manage money better</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            A better way to manage your finances
+            Take the guess work out of your finances
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-          Track My Funds makes managing your finances should be simple and stress-free. Whether you're a seasoned finance expert or just starting out, you'll find everything you need to take control of your finances and reach your financial goals.
+          Track My Funds makes managing your money simple and stress-free. Whether you're a seasoned finance expert or just starting out, you'll find everything you need to take control of your finances and reach your financial goals.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
