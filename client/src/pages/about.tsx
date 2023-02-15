@@ -1,4 +1,4 @@
-import { CreditCardIcon, BanknotesIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
+import { CreditCardIcon, BanknotesIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid';
 
 const features = [
   {
