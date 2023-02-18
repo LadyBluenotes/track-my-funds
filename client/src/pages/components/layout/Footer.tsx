@@ -15,22 +15,22 @@ export default function Footer() {
         </a>
         <ul className="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0">
           <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6 ">
+            <a href="/about" className="mr-4 hover:underline md:mr-6 ">
               About
             </a>
           </li>
           <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
+            <a href="/privacy" className="mr-4 hover:underline md:mr-6">
               Privacy Policy
             </a>
           </li>
           <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6 ">
-              Licensing
+            <a href="https://github.com/LadyBluenotes/track-my-funds" className="mr-4 hover:underline md:mr-6 ">
+              GitHub
             </a>
           </li>
           <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
+            <a href="/contact" className="mr-4 hover:underline md:mr-6">
               Contact
             </a>
           </li>

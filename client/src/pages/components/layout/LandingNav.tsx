@@ -27,7 +27,7 @@ export default function LandingNav() {
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-0 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1 pl-10 lg:pl-10">
             <a href="/">
-              <span className="sr-only">Track Your Funds</span>
+              <span className="sr-only">Track My Funds</span>
               <img className="h-20 sm:h-20" src="/smallLogo.jpg" alt="" />
             </a>
           </div>
