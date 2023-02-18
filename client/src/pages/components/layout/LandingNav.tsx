@@ -1,24 +1,24 @@
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react';
+import { Fragment } from "react";
+import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
   HomeIcon,
-  BookOpenIcon
-} from '@heroicons/react/24/outline';
+  BookOpenIcon,
+} from "@heroicons/react/24/outline";
 
 const solutions = [
   {
-    name: 'Home',
-    href: '/',
+    name: "Home",
+    href: "/",
     icon: HomeIcon,
   },
   {
-    name: 'About',
-    href: '/about',
+    name: "About",
+    href: "/about",
     icon: BookOpenIcon,
-  }
-]
+  },
+];
 
 export default function LandingNav() {
   return (
@@ -28,11 +28,7 @@ export default function LandingNav() {
           <div className="flex justify-start lg:w-0 lg:flex-1 pl-10 lg:pl-10">
             <a href="/">
               <span className="sr-only">Track Your Funds</span>
-              <img
-                className="h-20 sm:h-20"
-                src="/smallLogo.jpg"
-                alt=""
-              />
+              <img className="h-20 sm:h-20" src="/smallLogo.jpg" alt="" />
             </a>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -42,15 +38,24 @@ export default function LandingNav() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <a href="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <a
+              href="/"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
               Home
             </a>
-            <a href="/about" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <a
+              href="/about"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
               About
             </a>
           </Popover.Group>
           <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a href="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+            <a
+              href="/login"
+              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+            >
               Log in
             </a>
             <a
@@ -72,7 +77,10 @@ export default function LandingNav() {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <Popover.Panel focus className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden z-50">
+        <Popover.Panel
+          focus
+          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden z-50"
+        >
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
@@ -98,8 +106,13 @@ export default function LandingNav() {
                       href={item.href}
                       className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                     >
-                      <item.icon className="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true" />
-                      <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>
+                      <item.icon
+                        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+                        aria-hidden="true"
+                      />
+                      <span className="ml-3 text-base font-medium text-gray-900">
+                        {item.name}
+                      </span>
                     </a>
                   ))}
                 </nav>
@@ -114,8 +127,11 @@ export default function LandingNav() {
                   Register
                 </a>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Already have an account?{' '}
-                  <a href="/login" className="text-indigo-600 hover:text-indigo-500">
+                  Already have an account?{" "}
+                  <a
+                    href="/login"
+                    className="text-indigo-600 hover:text-indigo-500"
+                  >
                     Log in
                   </a>
                 </p>
@@ -125,5 +141,5 @@ export default function LandingNav() {
         </Popover.Panel>
       </Transition>
     </Popover>
-  )
+  );
 }
