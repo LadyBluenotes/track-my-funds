@@ -1,73 +1,15 @@
 import React, { useState } from 'react';
-import { useForm } from '@mantine/form';
-import { TextInput, Button, Flex, Container, createStyles, Table, Stack } from '@mantine/core';
-import { IconTrash, IconPencil } from '@tabler/icons-react';
-
-const useStyles = createStyles({
-  expenseContainer: {
-    minHeight: 610,
-  },
-    expenseHeading: {
-        textAlign: 'center',
-        fontSize: '2.5rem',
-        fontWeight: 700,
-        color: '#000',
-        marginBottom: '1rem',
-    },
-    form: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-    textInput: {
-        width: '300px',
-    },
-    addButton: {
-        width: 'calc(100% - 8px)',
-        height: 'calc(100% - 8px)',
-        padding: '0',
-        fontSize: '25px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: '3px'
-    },
-    monthlyExpenseHeading: {
-        textAlign: 'center',
-        fontSize: '1.5rem',
-        fontWeight: 700,
-        color: '#000',
-        marginTop: '2rem',
-    },
-    actionButtons: {
-        spacing: 'sm',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    tableStyle: {
-        maxWidth: '500px',
-        margin: '0 auto',
-        marginBottom: '30px'
-    }
-});
+import Modal from './components/Modal';
 
 interface monthlyExpenses {
     name: string;
     amount: number;
 }
 
-export default function Expenses() {
-  const { classes } = useStyles();
-  const [monthlyExpense, setMonthlyExpense] = useState();
+export default function Income() {
 
-  const tableHeaders: any = (
-    <tr>
-        <th>Expense</th>
-        <th>Amount</th>
-        <th></th>
-    </tr>
-  );
+  const [monthlyExpense, setMonthlyExpense] = useState();
+  const [modalShow, setModalShow] = useState(false);
 
   const monthlyExpenses = [
     { name: 'Rent', amount: 1000 },
@@ -81,75 +23,60 @@ export default function Expenses() {
     { name: 'Groceries', amount: 100 },
 ];
 
-  const tableRows: any = monthlyExpenses.map((expense) =>(
-    <tr key={expense.name}>
-        <td>{expense.name}</td>
-        <td>{expense.amount}</td>
-        <td>
-            <Stack className={classes.actionButtons}>
-                <IconPencil />
-                <IconTrash />
-            </Stack>
-        </td>
+  const tableHeaders: any = (
+    <tr>
+      <th className="px-6 py-3 text-base">Expense</th>
+      <th className="px-6 py-3 text-base">Amount</th>
+      <th className="px-6 py-3"></th>
+    </tr>
+  );
+
+  const tableRows: any = monthlyExpenses.map((expense: monthlyExpenses) => (
+    <tr className="bg-grey-50 border-b-2">
+      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-base">{expense.name}</td>
+      <td className="px-6 py-4 text-base">{expense.amount}</td>
+      <td className="px-6 py-4 text-center">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
+          Edit
+        </button>
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Delete
+        </button>
+      </td>
     </tr>
   ));
 
-  const form = useForm({
-    initialValues: {
-        expense: 0,
-    },
-    transformValues: (values) => ({
-        expense: Number(values.expense) || 0,
-    }),
-  });
+  const showModal = () => {
+    setModalShow(true);
+  }
 
-  const handleSubmit = (values: any) => {
-    setMonthlyExpense(values.expense);
-
-    console.log(values);
-  };
-
+  const hideModal = () => {
+    setModalShow(false);
+  }
 
   return (
-    <Container className={classes.expenseContainer}>
-      <h1 className={classes.expenseHeading}>Expense</h1>
-      <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
-        <Flex direction={{ base: 'row' }} gap={{ base: 'sm' }} justify="center">
-          <TextInput
-            icon={'$'}
-            type="number"
-            description="Enter your monthly expense"
-            mt="lg"
-            radius="lg"
-            {...form.getInputProps('expense')}
-            className={classes.textInput}
-            rightSection={
-              <Button
-                type="submit"
-                radius="lg"
-                variant="subtle"
-                color="teal"
-                size="md"
-                className={classes.addButton}
-              >
-                +
-              </Button>
-            }
-          />
-        </Flex>
-      </form>
-      <h2 className={classes.monthlyExpenseHeading}>Monthly Expenses</h2>
-        <Table 
-            verticalSpacing={12}
-            horizontalSpacing={3}
-            className={classes.tableStyle}>
-            <thead>
+    <div className="pb-20 pt-20">
+
+      {  modalShow ? <Modal hideModal={hideModal} modalType={'Expense'} modalPlaceholder={'Expense name'} /> : null }
+      
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
+          <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
+              <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
+                  Monthly Expenses
+                <div>
+                  <button data-modal-target="incomeModal" data-modal-toggle="incomeModal" className="block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40" type="button" onClick={showModal}>
+                    Add New Expense
+                  </button>
+                </div>
+              </caption>
+              <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
                 {tableHeaders}
-            </thead>
-            <tbody>
-                {tableRows}
-            </tbody>
-        </Table>
-    </Container>
+              </thead>
+              <tbody>
+                  {tableRows}
+              </tbody>
+          </table>
+      </div>
+    </div>
   );
 }

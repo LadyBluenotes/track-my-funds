@@ -51,7 +51,7 @@ export default function Income() {
   return (
     <div className="pb-20 pt-20">
 
-      {  modalShow ? <Modal hideModal={hideModal} /> : null }
+      {  modalShow ? <Modal hideModal={hideModal} modalType={'Income'} modalPlaceholder={'Income source'} /> : null }
       
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">

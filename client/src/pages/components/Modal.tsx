@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-export default function Modal({ hideModal }: any) {
+export default function Modal({ hideModal, modalType, modalPlaceholder }: any) {
 
     return (
-        <div id="modal" table-index="-1" aria-hidden="true" className="fixed left-0 right-0 z-50 w-full pt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full py-5 overflow-auto blur-none mt-2/12" style={{ 
+        <div id="modal" table-index="-1" aria-hidden="true" className="fixed left-0 right-0 z-50 w-full pt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-100 w-100 backdrop-blur py-5 overflow-auto mt-2/12" style={{ 
             display: hideModal ? 'block' : 'none',
           }}>
             <div className="p-10 bg-white rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto">
@@ -12,17 +12,17 @@ export default function Modal({ hideModal }: any) {
                   <span className="sr-only">Close modal</span>
               </button>
               <h1 className="text-3xl font-semibold text-center text-indigo-600">
-                Enter New Income
+                Enter New {modalType}
               </h1>
               <form className="mt-4 mx-5">
                 <div className="mb-2 mt-5">
                   <label className="block text-sm font-semibold text-gray-800">
-                    Income
+                    {modalType}
                   </label>
                   <input
                     required
-                    name="income"
-                    placeholder="Income"
+                    name={modalType}
+                    placeholder={modalPlaceholder}
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -34,7 +34,7 @@ export default function Modal({ hideModal }: any) {
                   <input
                     required
                     name="amount"
-                    placeholder="Amount"
+                    placeholder="Enter dollar amount"
                     type="number"
                     className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
