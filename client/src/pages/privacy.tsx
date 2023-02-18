@@ -1,6 +1,6 @@
 export default function Privacy() {
   return (
-    <section className="w-8/12 pl-auto mx-auto py-10">
+    <section className="p-10 bg-white rounded-lg drop-shadow-md sm:max-w-md lg:max-w-2xl m-auto my-20">
       <h1 className="text-4xl font-bold text-center pb-2">Privacy Policy</h1>
       <p className="text-center pb-10 text-gray-500">Last updated: February 18, 2023</p>
       <ul className="list-disc list-inside">
