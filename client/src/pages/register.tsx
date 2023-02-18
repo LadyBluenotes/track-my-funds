@@ -19,33 +19,22 @@ export default function Login() {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+        console.log('hit')
+        
+    }
 
-        const res = await fetch('http://localhost:5000/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
-
-        const data = await res.json();
-
-        console.log(data);
-    };
 
 
     return (
-        <div className="pt-20 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-74px)] overflow-auto">
-            <div className=" p-10 bg-white rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto">
+        <div className="pt-20 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-150px)] overflow-auto">
+            <div className=" p-10 bg-white rounded-lg drop-shadow-md xs:max-w-md sm:max-w-lg m-auto">
                 <h1 className="text-3xl font-semibold text-center text-indigo-600 mb-2">
                    Register for an account
                 </h1>
-                <form className="mt-4 mx-5 border-t-4 border-double border-indigo-200">
+                <form 
+                    className="mt-4 mx-5 border-t-4 border-double border-indigo-200" 
+                    >
                     <div className="mb-2 mt-5">
                         <label
                             className="block text-sm font-semibold text-gray-800"
@@ -54,9 +43,11 @@ export default function Login() {
                         </label>
                         <input
                             required
+                            id='email'
                             name='email'
                             placeholder='Email'
                             type="email"
+                            onChange={(e) => setEmail(e.target.value)}
                             className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                     </div>
@@ -69,9 +60,12 @@ export default function Login() {
                             </label>
                             <input
                                 required
+                                minLength={8}
+                                id='password'
                                 name='password'
                                 type="password"
                                 placeholder='Password'
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-7">
@@ -82,7 +76,7 @@ export default function Login() {
                         </div>
                     </div>
                     <div className="mt-6">
-                        <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-600">
+                        <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-600" type='button' onClick={handleSubmit}>
                             Sign up
                         </button>
                     </div>
@@ -90,12 +84,12 @@ export default function Login() {
 
                 <p className="mt-8 text-xs font-light text-center text-gray-700">
                     {" "}
-                    Don't have an account?{" "}
+                    Already have an account?{" "}
                     <a
-                        href="#"
+                        href="/login"
                         className="font-medium text-indigo-600 hover:underline"
                     >
-                        Sign up
+                        Login here
                     </a>
                 </p>
             </div>

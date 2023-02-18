@@ -18,7 +18,7 @@ export default function Login() {
     };
 
     return (
-        <div className="pt-20 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-74px)] overflow-auto">
+        <div className="pt-20 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-150px)] overflow-auto">
             <div className=" p-10 bg-white rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto">
                 <h1 className="text-3xl font-semibold text-center text-indigo-600">
                    Welcome Back!
@@ -68,12 +68,12 @@ export default function Login() {
 
                 <p className="mt-8 text-xs font-light text-center text-gray-700">
                     {" "}
-                    Already have an account?{" "}
+                    Don't have an account?{" "}
                     <a
-                        href="/login"
+                        href="/register"
                         className="font-medium text-indigo-600 hover:underline"
                     >
-                        Login here
+                        Register here.
                     </a>
                 </p>
             </div>

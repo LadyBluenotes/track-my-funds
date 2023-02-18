@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
+import { Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
   XMarkIcon,
   HomeIcon,
   BookOpenIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/24/outline';
 
 const solutions = [
   {

@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.register = async (req, res) => {
+    console.log(req.body)
     try {
         const { email, password } = req.body;
         let userExists = await User.findOne({ email });
         if(userExists) {
-            res.status(401).json({ message: "Email is already in use." });
+            res.status(401).json({ message: "Email is already in use.", error: error.message });
             return;
         }
         const saltRounds = 10;
@@ -23,9 +24,7 @@ exports.register = async (req, res) => {
             await user.save();
             res.status(201).json({ message: "User created successfully" });
             };
-        })
-        
-
+        });
     } catch (err) {
         res.status(401).send( err.message );
     }

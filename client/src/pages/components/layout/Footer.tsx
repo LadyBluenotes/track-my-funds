@@ -1,54 +1,38 @@
-import { createStyles, Container, Group, Anchor } from '@mantine/core';
 import Image from 'next/image';
 
-const useStyles = createStyles((theme) => ({
-  footer: {
-    borderTop: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
-    backgroundColor: theme.colors.gray[1],
-    position: 'static',
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
 
-  inner: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    minHeight: 100,
-    padding: [theme.spacing.md, theme.spacing.xl], 
-  }
-}));
 
 export default function Footer() {
-  const { classes } = useStyles();
-
-  const links = [
-    { link:'/about', label: 'About' },
-    { link:'/contact', label: 'Contact' },
-    { link:'/register', label: 'Register' },
-    { link:'/privacy', label: 'Privacy' },
-  ]
-
-  const items = links.map((link) => (
-    <Anchor<'a'>
-      color="dimmed"
-      key={link.label}
-      href={link.link}
-      size="sm"
-    >
-      {link.label}
-    </Anchor>
-  ));
 
   return (
-    <div className={classes.footer}>
-      <Container className={classes.inner}>
-        <Image src="/smallLogo.jpg" alt="logo" width={100} height={85} />
-        <Group>{items}</Group>
-      </Container>
-    </div>
+      <footer className="pb-0 bg-white shadow">
+          <div className="sm:flex sm:items-center sm:justify-between">
+              <a href="#" className="py-5">
+                  <Image 
+                    src="/logo.png"
+                    height={50}
+                    width={150}
+                    className="px-5" alt="Track My Funds Logo" />
+              </a>
+              <ul className="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0">
+                  <li>
+                      <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
+                  </li>
+                  <li>
+                      <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+                  </li>
+                  <li>
+                      <a href="#" className="mr-4 hover:underline md:mr-6 ">Licensing</a>
+                  </li>
+                  <li>
+                      <a href="#" className="mr-4 hover:underline md:mr-6">Contact</a>
+                  </li>
+              </ul>
+          </div>
+          <hr className="mb-5 border-gray-200" />
+          <span className="block text-sm text-gray-500 sm:text-center sm:pb-5">© 2023 <a href="#">Track My Funds</a>. All Rights Reserved.
+          </span>
+      </footer>
+
   );
 }
