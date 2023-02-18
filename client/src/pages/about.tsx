@@ -23,7 +23,7 @@ const features = [
 
 export default function Example() {
   return (
-    <div className="h-[calc(100vh-74px)] overflow-auto bg-gradient-to-br from-white to-indigo-200 py-10">
+    <div className="p-10">
       <div className="mx-auto max-w-7xl px-3 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Manage money better</h2>

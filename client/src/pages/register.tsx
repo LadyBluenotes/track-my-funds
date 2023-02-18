@@ -24,10 +24,8 @@ export default function Login() {
         
     }
 
-
-
     return (
-        <div className="pt-20 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-150px)] overflow-auto">
+        <div className="py-20">
             <div className=" p-10 bg-white rounded-lg drop-shadow-md xs:max-w-md sm:max-w-lg m-auto">
                 <h1 className="text-3xl font-semibold text-center text-indigo-600 mb-2">
                    Register for an account

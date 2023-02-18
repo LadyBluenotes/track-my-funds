@@ -1,55 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from '@mantine/form';
-import { TextInput, Button, Flex, Code, Container, createStyles, Stack, Table } from '@mantine/core';
-import { IconTrash, IconPencil } from '@tabler/icons-react';
-
-const useStyles = createStyles({
-  incomeContainer: {
-    minHeight: '610px',
-  },
-  incomeHeading: {
-    textAlign: 'center',
-    fontSize: '2.5rem',
-    fontWeight: 700,
-    color: '#000',
-    marginBottom: '1rem',
-  },
-  form: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  textInput: {
-    width: '300px',
-  },
-  addButton: {
-    width: 'calc(100% - 8px)',
-    height: 'calc(100% - 8px)',
-    padding: '0',
-    fontSize: '25px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: '3px'
-  },
-  monthlyIncomeHeading: {
-    textAlign: 'center',
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    color: '#000',
-    marginTop: '2rem',
-  },
-  actionButtons: {
-    spacing: 'sm',
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  tableStyle: {
-      maxWidth: '500px',
-      margin: '0 auto',
-}
-});
+import Modal from './components/Modal';
 
 interface monthlyIncomes {
   name: string;
@@ -57,9 +7,9 @@ interface monthlyIncomes {
 }
 
 export default function Income() {
-  const { classes } = useStyles();
 
   const [monthlyIncome, setMonthlyIncome] = useState();
+  const [modalShow, setModalShow] = useState(false);
 
   const monthlyIncomes = [
     { name: 'Salary', amount: 5000 },
@@ -69,81 +19,58 @@ export default function Income() {
 
   const tableHeaders: any = (
     <tr>
-      <th>Income</th>
-      <th>Amount</th>
-      <th></th>
+      <th className="px-6 py-3 text-base">Income</th>
+      <th className="px-6 py-3 text-base">Amount</th>
+      <th className="px-6 py-3"></th>
     </tr>
   );
 
-  const tableRows: any = monthlyIncomes.map((income) =>(
-    <tr key={income.name}>
-        <td>{income.name}</td>
-        <td>{income.amount}</td>
-        <td>
-            <Stack className={classes.actionButtons}>
-                <IconPencil />
-                <IconTrash />
-            </Stack>
-        </td>
+  const tableRows: any = monthlyIncomes.map((income: monthlyIncomes) => (
+    <tr className="bg-grey-50 border-b-2">
+      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-base">{income.name}</td>
+      <td className="px-6 py-4 text-base">{income.amount}</td>
+      <td className="px-6 py-4 text-center">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
+          Edit
+        </button>
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Delete
+        </button>
+      </td>
     </tr>
   ));
 
-  const form = useForm({
-    initialValues: {
-      income: 0,
-    },
-    transformValues: (values) => ({
-      income: Number(values.income) || 0,
-    }),
-  });
+  const showModal = () => {
+    setModalShow(true);
+  }
 
-  const handleSubmit = (values: any) => {
-    setMonthlyIncome(values.income);
-
-    console.log(values);
-  };
-
+  const hideModal = () => {
+    setModalShow(false);
+  }
 
   return (
-    <Container className={classes.incomeContainer}>
-      <h1 className={classes.incomeHeading}>Income</h1>
-      <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
-        <Flex direction={{ base: 'row' }} gap={{ base: 'sm' }} justify="center">
-          <TextInput
-            icon={'$'}
-            type="number"
-            description="Enter your monthly income"
-            mt="lg"
-            radius="lg"
-            {...form.getInputProps('income')}
-            className={classes.textInput}
-            rightSection={
-              <Button
-                type="submit"
-                radius="lg"
-                variant="subtle"
-                color="teal"
-                size="md"
-                className={classes.addButton}
-              >
-                +
-              </Button>
-            }
-          />
-        </Flex>
-      </form>
-      <h2 className={classes.monthlyIncomeHeading}>Monthly Incomes</h2>
-        <Table 
-            verticalSpacing={12}
-            horizontalSpacing={3}
-            className={classes.tableStyle}>
-            <thead>
+    <div className="pb-20 pt-20">
+
+      {  modalShow ? <Modal hideModal={hideModal} /> : null }
+      
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
+          <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
+              <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
+                  Monthly Incomes
+                <div>
+                  <button data-modal-target="incomeModal" data-modal-toggle="incomeModal" className="block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40" type="button" onClick={showModal}>
+                    Add New Income
+                  </button>
+                </div>
+              </caption>
+              <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
                 {tableHeaders}
-            </thead>
-            <tbody>
-                {tableRows}
-            </tbody>
-        </Table>
-    </Container>
+              </thead>
+              <tbody>
+                  {tableRows}
+              </tbody>
+          </table>
+      </div>
+    </div>
   );
 }

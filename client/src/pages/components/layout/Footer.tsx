@@ -30,7 +30,7 @@ export default function Footer() {
               </ul>
           </div>
           <hr className="mb-5 border-gray-200" />
-          <span className="block text-sm text-gray-500 sm:text-center sm:pb-5">© 2023 <a href="#">Track My Funds</a>. All Rights Reserved.
+          <span className="block text-sm text-gray-500 sm:text-center sm:pb-5">© 2023 <a href="/">Track My Funds</a>. All Rights Reserved.
           </span>
       </footer>
 
