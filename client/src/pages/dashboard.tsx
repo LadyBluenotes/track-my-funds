@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "./components/Modal";
 
 interface monthlyIncomes {
   name: string;
@@ -17,6 +16,7 @@ export default function Dashboard() {
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const tableRows: any = [];
+    const usedMonths: any = [];
 
     const monthlyIncomes = [
     { name: "Salary", amount: 5000, month: 1, year: 2021 },
@@ -48,12 +48,12 @@ export default function Dashboard() {
     { name: "Utilities", amount: 300 },
     { name: "Transportation", amount: 200 },
     { name: "Entertainment", amount: 100 },
-    { name: "Miscellaneous", amount: 100 },
+    { name: "Misc", amount: 100 },
   ];
 
   const tableHeaders: any = (
     <tr>
-      <th className="px-3 py-3 text-sm">Month</th>
+      <th className="px-0 py-3 text-sm w-[120px]">Month</th>
       <th className="px-3 py-3 text-sm">Total Income</th>
       {monthlyExpenses.map((expense: monthlyExpenses) => (
         <th className="px-3 py-3 text-sm">{expense.name}</th>
@@ -62,45 +62,52 @@ export default function Dashboard() {
     </tr>
   );
 
-    const totalIncome = (month: number) => {
+  const monthlyTotalIncome = (month: any, year: any) => {
         let total = 0;
-        // if the incomes month and year match the month an
-
+        monthlyIncomes.forEach((income: monthlyIncomes) => {
+            if (income.month === month && income.year === year) {
+                total += income.amount;
+            }
+        });
+        return total;
+    };
 
         
-
-        return total;
-    }
-
-    const remaining = (month: number) => {
-        let total = totalIncome(month);
+    const remaining = (month:any, year:any) => {
+        let total: any = monthlyTotalIncome(month, year);
         monthlyExpenses.forEach((expense: monthlyExpenses) => {
             total -= expense.amount;
         });
         return total;
     }
     
-    for (let i = 0; i < months.length; i++) {
-        if (totalIncome(i + 1) > 0) {
+    const rows = monthlyIncomes.map((income: monthlyIncomes) => {
+        let monthName = months[income.month - 1];
+        let month = income.month;
+        let year = income.year;
+        
+        // map through the months and years to create the rows for the table
+        if (!usedMonths.includes(`${monthName} ${year}`)) {
+            usedMonths.push(`${monthName} ${year}`);
             tableRows.push(
                 <tr className="border-b border-gray-200">
-                    <td className="px-3 py-3">{months[i]}</td>
-                    <td className="px-3 py-3 text-center">{totalIncome(i + 1)}</td>
+                    <td className="px-3 py-3 text-left">{monthName} {year}</td>
+                    <td className="px-3 py-3 text-center bg-green-100">${monthlyTotalIncome(month, year)}</td>
                     {monthlyExpenses.map((expense: monthlyExpenses) => (
-                        <td className="px-3 py-3 text-center">{expense.amount}</td>
+                        <td className="px-3 py-3 text-center bg-red-100">${expense.amount}</td>
                     ))}
-                    <td className="px-3 py-3 text-center">{
-                        remaining(i + 1) < 0 ? (
-                            <span className="text-red-500">-${remaining(i + 1)*-1}</span>
+                    <td className="px-3 py-3 text-right">{
+                        remaining(month, year) < 0 ? (
+                            <span className="text-red-500">-${remaining(month, year)*-1}</span>
                         ) : (
-                            <span>${remaining(i + 1)}</span>
-                        )
-                    }</td>
+                            <span className="text-green-500">${remaining(month, year)}</span>
+                        )}
+                    </td>
                 </tr>
             );
         }
-    }
-
+        return tableRows;
+    });
 
   return (
     <div className="pb-20 pt-20">
