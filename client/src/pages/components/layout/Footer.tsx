@@ -2,44 +2,46 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="pb-0 bg-white shadow">
-      <div className="sm:flex sm:items-center sm:justify-between">
-        <a href="#" className="py-5">
-          <Image
-            src="/logo.png"
-            height={50}
-            width={150}
-            className="px-5"
-            alt="Track My Funds Logo"
-          />
-        </a>
-        <ul className="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0">
-          <li>
-            <a href="/about" className="mr-4 hover:underline md:mr-6 ">
+    <footer className="bg-white">
+      <div className="max-w-screen-xl px-4 py-5 mx-auto space-y-5 overflow-hidden sm:px-6 lg:px-8">
+        <nav className="flex flex-wrap justify-center -mx-5 my-0">
+          <div className="px-5 py-1">
+            <a
+              href="/about"
+              className="text-base leading-6 text-gray-500 hover:text-indigo-900"
+            >
               About
             </a>
-          </li>
-          <li>
-            <a href="/privacy" className="mr-4 hover:underline md:mr-6">
-              Privacy Policy
+          </div>
+          <div className="px-4 py-1">
+            <a
+              href="/privacy"
+              className="text-base leading-6 text-gray-500 hover:text-indigo-900"
+            >
+              Privacy
             </a>
-          </li>
-          <li>
-            <a href="https://github.com/LadyBluenotes/track-my-funds" className="mr-4 hover:underline md:mr-6 ">
+          </div>
+          <div className="px-4 py-1">
+            <a
+              href="https://github.com/LadyBluenotes/track-my-funds"
+              className="text-base leading-6 text-gray-500 hover:text-indigo-900"
+            >
               GitHub
             </a>
-          </li>
-          <li>
-            <a href="/contact" className="mr-4 hover:underline md:mr-6">
+          </div>
+          <div className="px-4 py-1">
+            <a
+              href="/contact"
+              className="text-base leading-6 text-gray-500 hover:text-indigo-900"
+            >
               Contact
             </a>
-          </li>
-        </ul>
+          </div>
+        </nav>
+        <p className="mt-5 text-base leading-6 text-center text-gray-400">
+          © 2023 Track My Funds. All rights reserved.
+        </p>
       </div>
-      <hr className="mb-5 border-gray-200" />
-      <span className="block text-sm text-gray-500 sm:text-center sm:pb-5">
-        © 2023 <a href="/">Track My Funds</a>. All Rights Reserved.
-      </span>
     </footer>
   );
 }

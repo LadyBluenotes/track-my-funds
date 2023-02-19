@@ -4,20 +4,32 @@ import {
   Bars3Icon,
   XMarkIcon,
   HomeIcon,
-  BookOpenIcon,
+  BanknotesIcon,
+  CreditCardIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 
-const solutions = [
-  {
-    name: "Home",
-    href: "/",
-    icon: HomeIcon,
-  },
-  {
-    name: "About",
-    href: "/about",
-    icon: BookOpenIcon,
-  },
+const userPages = [
+    {
+        name: "Dashboard",
+        href: "/dashboard",
+        icon: HomeIcon,
+      },
+    {
+        name: "Income",
+        href: "/income",
+        icon: BanknotesIcon,
+    },
+    {
+        name: "Expenses",
+        href: "/expenses",
+        icon: CreditCardIcon,
+    },
+    {
+        name: "Profile",
+        href: "/profile",
+        icon: UserIcon,
+    },
 ];
 
 export default function LandingNav() {
@@ -32,37 +44,49 @@ export default function LandingNav() {
             </a>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 pr-10 lg:pr-20">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 mr-10 lg:pr-20">
               <span className="sr-only">Open menu</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
             <a
-              href="/"
+              href="/dashboard"
               className="text-base font-medium text-gray-500 hover:text-indigo-900"
             >
-              Home
+              Dashboard
             </a>
             <a
-              href="/about"
+              href="/income"
               className="text-base font-medium text-gray-500 hover:text-indigo-900"
             >
-              About
+              Income
+            </a>
+            <a
+              href="/expenses"
+              className="text-base font-medium text-gray-500 hover:text-indigo-900"
+            >
+              Expenses
+            </a>
+            <a
+              href="/expenses"
+              className="text-base font-medium text-gray-500 hover:text-indigo-900"
+            >
+              Profile
             </a>
           </Popover.Group>
           <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
             <a
-              href="/login"
+              href="/settings"
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-indigo-900"
             >
-              Log in
+              Settings
             </a>
             <a
-              href="/register"
+              href="/signout"
               className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
-              Register
+              Sign out
             </a>
           </div>
         </div>
@@ -100,7 +124,7 @@ export default function LandingNav() {
               </div>
               <div className="mt-6 mx-0">
                 <nav className="grid gap-y-8">
-                  {solutions.map((item) => (
+                  {userPages.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
@@ -124,17 +148,8 @@ export default function LandingNav() {
                   href="/register"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-600"
                 >
-                  Register
+                  Sign Out
                 </a>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Already have an account?{" "}
-                  <a
-                    href="/login"
-                    className="text-indigo-600 hover:text-indigo-500"
-                  >
-                    Log in
-                  </a>
-                </p>
               </div>
             </div>
           </div>

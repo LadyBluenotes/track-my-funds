@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import Footer from "@/pages/components/layout/Footer";
 import LandingNav from "@/pages/components/layout/LandingNav";
+import UserNav from "@/pages/components/layout/UserNav";
 import "@/styles/globals.css";
 
 export default function App(props: AppProps) {
@@ -22,7 +23,11 @@ export default function App(props: AppProps) {
         id="main"
         className="bg-gradient-to-b from-white to-indigo-300 overflow-auto"
       >
-        <LandingNav />
+        { // if user is logged in, render the user nav
+        // if user is not logged in, render the landing nav
+        }
+        {/* <LandingNav /> */}
+        <UserNav />
         <Component {...pageProps} />
         <Footer />
       </main>
