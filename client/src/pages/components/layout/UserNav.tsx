@@ -6,30 +6,30 @@ import {
   HomeIcon,
   BanknotesIcon,
   CreditCardIcon,
-  UserIcon
+  UserIcon,
 } from "@heroicons/react/24/outline";
 
 const userPages = [
-    {
-        name: "Dashboard",
-        href: "/dashboard",
-        icon: HomeIcon,
-      },
-    {
-        name: "Income",
-        href: "/income",
-        icon: BanknotesIcon,
-    },
-    {
-        name: "Expenses",
-        href: "/expenses",
-        icon: CreditCardIcon,
-    },
-    {
-        name: "Profile",
-        href: "/profile",
-        icon: UserIcon,
-    },
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: HomeIcon,
+  },
+  {
+    name: "Income",
+    href: "/income",
+    icon: BanknotesIcon,
+  },
+  {
+    name: "Expenses",
+    href: "/expenses",
+    icon: CreditCardIcon,
+  },
+  {
+    name: "Profile",
+    href: "/profile",
+    icon: UserIcon,
+  },
 ];
 
 export default function LandingNav() {
