@@ -68,22 +68,16 @@ export default function LandingNav() {
             >
               Expenses
             </a>
-            <a
-              href="/expenses"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Profile
-            </a>
           </Popover.Group>
           <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
             <a
-              href="/settings"
+              href="/profile"
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-indigo-900"
             >
-              Settings
+              Profile
             </a>
             <a
-              href="/signout"
+              href="/profile"
               className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
               Sign out

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export default function Login() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const showMe = () => {
     setShowPassword(!showPassword);
@@ -33,6 +34,20 @@ export default function Login() {
         <form className="mt-4 mx-5 border-t-4 border-double border-indigo-200">
           <div className="mb-2 mt-5">
             <label className="block text-sm font-semibold text-gray-800">
+              Full Name
+            </label>
+            <input
+              required
+              id="fullName"
+              name="fullName"
+              placeholder="Full Name"
+              type="text"
+              onChange={(e) => setFullName(e.target.value)}
+              className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
+          <div className="mb-2">
+            <label className="block text-sm font-semibold text-gray-800">
               Email
             </label>
             <input
@@ -42,7 +57,7 @@ export default function Login() {
               placeholder="Email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 py-2 mt-1 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
           <div className="mb-2">
@@ -58,7 +73,7 @@ export default function Login() {
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-4 py-2 mt-1 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-7">
                 <button
@@ -93,7 +108,7 @@ export default function Login() {
             href="/login"
             className="font-medium text-indigo-600 hover:underline"
           >
-            Login here
+            Log in
           </a>
         </p>
       </div>
