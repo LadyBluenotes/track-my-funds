@@ -14,7 +14,7 @@ export default function Modal({ hideModal, modalType, modalPlaceholder }: any) {
       <div className="p-10 bg-white rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto">
         <button
           type="button"
-          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center"
+          className="float-right text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center"
           onClick={hideModal}
         >
           <svg
@@ -60,6 +60,48 @@ export default function Modal({ hideModal, modalType, modalPlaceholder }: any) {
               className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
+          {modalType === "Income" ? (
+            <div className="mb-2">
+              <div className="mb-2">
+                <label className="block text-sm font-semibold text-gray-800">
+                  Month
+                </label>
+                <select
+                  required
+                  name="month"
+                  className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                >
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+              <div className="mb-2">
+                <label className="block text-sm font-semibold text-gray-800">
+                  Year
+                </label>
+                <input
+                  required
+                  name="year"
+                  placeholder="Enter year"
+                  type="number"
+                  defaultValue={new Date().getFullYear()}
+                  className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                />
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="mb-2">
             <button
               type="submit"

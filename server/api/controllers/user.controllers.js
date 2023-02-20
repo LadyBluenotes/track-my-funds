@@ -7,7 +7,7 @@ require("dotenv").config();
 exports.register = async (req, res) => {
     console.log(req.body)
     try {
-        const { email, password } = req.body;
+        const { name, email, password } = req.body;
         let userExists = await User.findOne({ email });
         if(userExists) {
             res.status(401).json({ message: "Email is already in use.", error: error.message });
@@ -17,6 +17,7 @@ exports.register = async (req, res) => {
         const result = bcrypt.hash(password, saltRounds, async (err, hash) => {
             if(err) throw new Error("Internal server error");
             const user = new User({
+                name, 
                 email,
                 password: hash
             });

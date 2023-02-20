@@ -4,20 +4,45 @@ import Modal from "./components/Modal";
 interface monthlyIncomes {
   name: string;
   amount: number;
+  month: number;
+  year: number;
 }
 
 export default function Income() {
   const [monthlyIncome, setMonthlyIncome] = useState();
   const [modalShow, setModalShow] = useState(false);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const monthlyIncomes = [
-    { name: "Salary", amount: 5000 },
-    { name: "Side Hustle", amount: 1000 },
-    { name: "Investments", amount: 1000 },
+    { month: 1, year: 2023, name: "Salary", amount: 5000 },
+    { month: 1, year: 2023, name: "Side Hustle", amount: 1000 },
+    { month: 1, year: 2023, name: "Investments", amount: 1000 },
   ];
+
+  const getMonth = (month: number) => {
+    return months[month - 1];
+  };
+
+  const date = (month: string, year: number) => {
+    return `${month} ${year}`;
+  };
 
   const tableHeaders: any = (
     <tr>
+      <th className="px-6 py-3 text-base">Date</th>
       <th className="px-6 py-3 text-base">Income</th>
       <th className="px-6 py-3 text-base">Amount</th>
       <th className="px-6 py-3"></th>
@@ -27,6 +52,9 @@ export default function Income() {
   const tableRows: any = monthlyIncomes.map((income: monthlyIncomes) => (
     <tr className="bg-grey-50 border-b-2">
       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-base">
+        {date(getMonth(income.month), income.year)}
+      </td>
+      <td className="px-6 py-4 text-gray-900 whitespace-nowrap text-base">
         {income.name}
       </td>
       <td className="px-6 py-4 text-base">{income.amount}</td>
@@ -67,7 +95,7 @@ export default function Income() {
               <button
                 data-modal-target="incomeModal"
                 data-modal-toggle="incomeModal"
-                className="block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="float-right block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 type="button"
                 onClick={showModal}
               >
