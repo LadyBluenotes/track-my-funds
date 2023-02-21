@@ -21,7 +21,12 @@ app.use(require('./api/routes/user.routes'));
 mongoose.set('strictQuery', false);
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(MONGO_URI);
+    const conn = await mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (err) {
     console.error(err);
