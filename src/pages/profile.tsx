@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { PencilIcon } from "@heroicons/react/24/solid";
+
+import ProtectedPage from "./components/ProtectedPage";
 import UserProfileModal from "./components/UserProfileModal";
 
 interface user {
@@ -25,7 +27,7 @@ export default function Profile() {
   };
 
   return (
-    <>
+    <ProtectedPage>
       {edit ? <UserProfileModal hideModal={closeModal} /> : null}
       <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl bg-white mx-auto mt-20 mb-40">
         <div className="flex space-x-4 justify-end">
@@ -49,6 +51,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </>
+    </ProtectedPage>
   );
 }
