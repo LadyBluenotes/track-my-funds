@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
-import { useSession } from "next-auth/react";
 
 import "@/styles/globals.css";
 import Footer from "@/pages/components/layout/Footer";

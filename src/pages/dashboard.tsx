@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import ProtectedPage from "@/pages/components/ProtectedPage";
+
 interface monthlyIncomes {
   name: string;
   amount: number;
@@ -128,31 +130,33 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="pb-20 pt-20">
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto">
-        <table className="text-sm text-center text-gray-500 w-11/12 m-auto">
-          <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
-            Your Financial Dashboard
-          </caption>
-          <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
-            {tableHeaders}
-          </thead>
-          <tbody className="text-left">
-            {tableRows.length === 0 ? (
-              <tr className="border-b border-gray-200">
-                <td
-                  className="px-3 py-3 text-center"
-                  colSpan={monthlyExpenses.length + monthlyIncomes.length}
-                >
-                  No data to display
-                </td>
-              </tr>
-            ) : (
-              tableRows
-            )}
-          </tbody>
-        </table>
+    <ProtectedPage>
+      <div className="pb-20 pt-20">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto">
+          <table className="text-sm text-center text-gray-500 w-11/12 m-auto">
+            <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
+              Your Financial Dashboard
+            </caption>
+            <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
+              {tableHeaders}
+            </thead>
+            <tbody className="text-left">
+              {tableRows.length === 0 ? (
+                <tr className="border-b border-gray-200">
+                  <td
+                    className="px-3 py-3 text-center"
+                    colSpan={monthlyExpenses.length + monthlyIncomes.length}
+                  >
+                    No data to display
+                  </td>
+                </tr>
+              ) : (
+                tableRows
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </ProtectedPage>
   );
 }
