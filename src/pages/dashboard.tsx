@@ -15,6 +15,7 @@ interface monthlyExpenses {
 }
 
 export default function Dashboard() {
+
   const months = [
     "January",
     "February",

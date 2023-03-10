@@ -1,11 +1,46 @@
 import React, { useState } from "react";
 import { IconX } from "@tabler/icons-react";
+import clientPromise from "@/lib/db/mongodb";
+import { useSession } from "next-auth/react";
+
+import postExpense from "@/lib/helpers/postExpense";
+import postIncome from "@/lib/helpers/postIncome";
 
 export default function Modal({ hideModal, modalType }: any) {
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState("");
+  
+  const { data: session } = useSession();
+
+  const userEmail = session?.user?.email;
+
+  const usersId = async () => {
+    const client = await clientPromise;
+    const db = client.db();
+    return db.collection("users").findOne({ email: userEmail });
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    modalType === "Income"
+      ? postIncome({
+          name,
+          amount,
+          month,
+          year,
+          user: usersId()
+      })
+      : postExpense({
+          name,
+          amount,
+          month,
+          year,
+          user: usersId()
+      });
+  }
+
 
   return (
     <div
@@ -30,15 +65,7 @@ export default function Modal({ hideModal, modalType }: any) {
         </h1>
         <form
           className="mt-4 mx-5"
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert(JSON.stringify({
-              name,
-              amount,
-              month,
-              year,
-            }));
-          }}
+          onSubmit={handleSubmit}
         >
           <div className="mb-2 mt-5">
             <label className="block text-sm font-semibold text-gray-800">
@@ -48,7 +75,7 @@ export default function Modal({ hideModal, modalType }: any) {
               required
               id="name"
               name={modalType}
-              placeholder="e.g. Netflix"
+              placeholder={ modalType === "Income" ? "eg. Salary" : "eg. Rent"}
               value={name}
               onChange={(e) => setName(e.target.value)}
               type="text"
