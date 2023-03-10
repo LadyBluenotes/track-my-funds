@@ -1,22 +1,16 @@
 import React, { useState } from "react";
-import { PencilIcon } from "@heroicons/react/24/solid";
+import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
+import { PencilIcon } from "@heroicons/react/24/solid";
 import ProtectedPage from "./components/ProtectedPage";
 import UserProfileModal from "./components/UserProfileModal";
 
-interface user {
-  name: string;
-  email: string;
-  photo: string;
-}
-
 export default function Profile() {
   const [edit, setEdit] = useState(false);
-  let user: user = {
-    name: "Leroy Jenkins",
-    email: "leroy@jenkins.ca",
-    photo: "https://source.unsplash.com/150x150/?portrait?3",
-  };
+  const { data: session } = useSession();
+
+  let photo
 
   let editModal = () => {
     setEdit(true);
@@ -40,14 +34,14 @@ export default function Profile() {
           </button>
         </div>
         <img
-          src={user.photo}
-          alt={`${user.name}'s profile photo`}
+          src={ photo ? photo : "/userPhoto.jpg"}
+          alt={`${session?.user?.name}'s profile photo`}
           className="w-32 h-30 mx-auto rounded-full aspect-square"
         />
         <div className="space-y-4 text-center divide-y divide-gray-700">
           <div className="my-5 space-y-1">
-            <h2 className="text-xl font-semibold sm:text-2xl">{user.name}</h2>
-            <p className="px-5 text-xs sm:text-base">{user.email}</p>
+            <h2 className="text-xl font-semibold sm:text-2xl">{session?.user?.name}</h2>
+            <p className="px-5 text-xs sm:text-base">{session?.user?.email}</p>
           </div>
         </div>
       </div>

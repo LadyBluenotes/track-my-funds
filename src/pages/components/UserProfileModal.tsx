@@ -1,10 +1,15 @@
-import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
+import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+
+import { IconX } from "@tabler/icons-react";
 
 export default function UserProfileModal({ hideModal }: any) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState("");
+
+  const { data: session } = useSession();
 
   const handleNameChange = (e: any) => {
     setName(e.target.value);
