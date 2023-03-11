@@ -24,6 +24,8 @@ export default function Modal({ hideModal, modalType }: any) {
           month,
           year,
       });
+
+      hideModal();
   }
 
 

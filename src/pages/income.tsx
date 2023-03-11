@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ProtectedPage from "./components/ProtectedPage";
 import Modal from "./components/Modal";
@@ -11,7 +11,9 @@ interface monthlyIncomes {
 }
 
 export default function Income() {
-  const [monthlyIncome, setMonthlyIncome] = useState();
+  const [monthlyIncome, setMonthlyIncome] = useState<monthlyIncomes[] | null>(
+    null
+  );
   const [modalShow, setModalShow] = useState(false);
   const months = [
     "January",
@@ -27,15 +29,24 @@ export default function Income() {
     "November",
     "December",
   ];
+  let tableRows;
 
-  const monthlyIncomes = [
-    { month: 1, year: 2023, name: "Salary", amount: 5000 },
-    { month: 1, year: 2023, name: "Side Hustle", amount: 1000 },
-    { month: 1, year: 2023, name: "Investments", amount: 1000 },
-  ];
+  useEffect(() => {
+    fetch("/api/income/showIncomes", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMonthlyIncome(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const getMonth = (month: number) => {
-    return months[month - 1];
+    return months[month];
   };
 
   const date = (month: string, year: number) => {
@@ -51,25 +62,28 @@ export default function Income() {
     </tr>
   );
 
-  const tableRows: any = monthlyIncomes.map((income: monthlyIncomes) => (
-    <tr className="bg-grey-50 border-b-2">
-      <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
-        {date(getMonth(income.month), income.year)}
-      </td>
-      <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
-        {income.name}
-      </td>
-      <td className="px-6 py-2 text-base">{income.amount}</td>
-      <td className="px-6 py-2 text-center">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
-          Edit
-        </button>
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  if(monthlyIncome){
+    tableRows = monthlyIncome.map((income: monthlyIncomes) => (
+      <tr className="bg-grey-50 border-b-2">
+        <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
+          {date(getMonth(income.month), income.year)}
+        </td>
+        <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
+          {income.name}
+        </td>
+        <td className="px-6 py-2 text-base">{income.amount}</td>
+        <td className="px-6 py-2 text-center">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
+            Edit
+          </button>
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
+  }
+
 
   const showModal = () => {
     setModalShow(true);
@@ -105,7 +119,19 @@ export default function Income() {
             <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
               {tableHeaders}
             </thead>
-            <tbody>{tableRows}</tbody>
+            <tbody>{
+              tableRows ? (
+                tableRows
+              ) : (
+                <tr className="border-b border-gray-200">
+                  <td
+                    className="px-3 py-3 text-center"
+                    colSpan={4}
+                  >
+                    No data to display
+                  </td>
+                </tr>
+              )}</tbody>
           </table>
         </div>
       </div>
