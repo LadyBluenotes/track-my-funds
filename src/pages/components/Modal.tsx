@@ -1,26 +1,13 @@
 import React, { useState } from "react";
 import { IconX } from "@tabler/icons-react";
-import clientPromise from "@/lib/db/mongodb";
-import { useSession } from "next-auth/react";
 
-import postExpense from "@/lib/helpers/postExpense";
-import postIncome from "@/lib/helpers/postIncome";
+import { postIncome, postExpense } from "@/lib/helpers/postItems";
 
 export default function Modal({ hideModal, modalType }: any) {
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState("");
-  
-  const { data: session } = useSession();
-
-  const userEmail = session?.user?.email;
-
-  const usersId = async () => {
-    const client = await clientPromise;
-    const db = client.db();
-    return db.collection("users").findOne({ email: userEmail });
-  }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -30,14 +17,12 @@ export default function Modal({ hideModal, modalType }: any) {
           amount,
           month,
           year,
-          user: usersId()
       })
       : postExpense({
           name,
           amount,
           month,
           year,
-          user: usersId()
       });
   }
 

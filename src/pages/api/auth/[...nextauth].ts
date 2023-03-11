@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import DiscordProvider from "next-auth/providers/discord";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "@/lib/db/mongodb";
+import { clientPromise } from "@/lib/db/mongodb";
 
 export const authOptions: NextAuthOptions = {
   debug: true,
