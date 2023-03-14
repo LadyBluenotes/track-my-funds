@@ -5,10 +5,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const client = await clientPromise;
       const db = client.db("income");
-      const { name, value, user, month, year } = req.body;
+      const { name, amount, user, month, year } = req.body;
       const income = await db.collection("income").insertOne({
         name,
-        value,
+        amount,
         user,
         month,
         year,

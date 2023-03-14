@@ -53,6 +53,12 @@ export default function Income() {
     return `${month} ${year}`;
   };
 
+  const decimalPlaces = (num: any) => {
+    if (num){
+      return parseInt(num).toFixed(2);
+    }
+  };
+
   const tableHeaders: any = (
     <tr>
       <th className="px-6 py-3 text-base">Date</th>
@@ -71,7 +77,7 @@ export default function Income() {
         <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
           {income.name}
         </td>
-        <td className="px-6 py-2 text-base">{income.amount}</td>
+        <td className="px-6 py-2 text-base">{'$' + decimalPlaces(income.amount)}</td>
         <td className="px-6 py-2 text-center">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
             Edit
