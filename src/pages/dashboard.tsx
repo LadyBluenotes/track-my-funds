@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import ProtectedPage from "@/pages/components/ProtectedPage";
 
@@ -118,7 +119,6 @@ export default function Dashboard() {
   const usedMonths: any = [];
 
   if (monthlyIncomes && monthlyExpenses) {
-    // check both arrays for unique months and, when found, add to tableRows
     monthlyIncomes.forEach((income) => {
       if (!usedMonths.includes(income.month)) {
         usedMonths.push(income.month);

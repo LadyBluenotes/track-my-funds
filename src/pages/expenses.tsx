@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
@@ -36,6 +37,10 @@ export default function Income() {
     }
     return parseInt('0').toFixed(2);
   };
+
+  const { data: session, status } = useSession();
+
+  const user = session?.user?.id;
 
   useEffect(()=> {
     fetch("http://localhost:3000/api/expenses/showExpenses", {
@@ -138,7 +143,7 @@ if(expense){
     <ProtectedPage>
       <div className="pb-20 pt-20 w-10/12 mx-auto">
         {modalShow ? (
-          <Modal hideModal={hideModal} modalType={"Expense"} />
+          <Modal hideModal={hideModal} modalType={"Expense"} user={user}/>
         ) : null}
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">

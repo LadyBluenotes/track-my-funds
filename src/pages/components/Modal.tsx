@@ -3,7 +3,7 @@ import { IconX } from "@tabler/icons-react";
 
 import { postIncome, postExpense } from "@/lib/helpers/postItems";
 
-export default function Modal({ hideModal, modalType }: any) {
+export default function Modal({ hideModal, modalType, user }: any) {
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
   const [month, setMonth] = useState(0);
@@ -17,12 +17,14 @@ export default function Modal({ hideModal, modalType }: any) {
           amount,
           month,
           year,
+          user
       })
       : postExpense({
           name,
           amount,
           month,
           year,
+          user
       });
 
       hideModal();
