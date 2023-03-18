@@ -12,6 +12,8 @@ interface monthlyIncomes {
 interface monthlyExpenses {
   name: string;
   amount: number;
+  month: number;
+  year: number;
 }
 
 function decimalPlaces(num: any) {
@@ -20,6 +22,28 @@ function decimalPlaces(num: any) {
   }
   return parseInt('0').toFixed(2);
 };
+
+function monthsIncome(monthlyIncomes: monthlyIncomes[], month: number) {
+  const total = monthlyIncomes.reduce((acc, income) => {
+    if (income.month === month) {
+      return acc + income.amount;
+    }
+    return acc;
+  }, 0);
+
+  return decimalPlaces(total);
+}
+
+function monthsExpenses(monthlyExpenses: monthlyExpenses[], month: number) {
+  const total = monthlyExpenses.reduce((acc, expense) => {
+    if (expense.month === month) {
+      return acc + expense.amount;
+    }
+    return acc;
+  }, 0);
+
+  return decimalPlaces(total);
+}
 
 function totalMonthlyIncome(monthlyIncomes: monthlyIncomes[]) {
   const total = monthlyIncomes.reduce((acc, income) => {
@@ -36,10 +60,8 @@ function totalMonthlyExpenses(monthlyExpenses: monthlyExpenses[]) {
   return decimalPlaces(total);
 }
 
-function remaining(monthlyIncomes: monthlyIncomes[], monthlyExpenses: monthlyExpenses[]) {
-  const totalIncome: any = totalMonthlyIncome(monthlyIncomes);
-  const totalExpenses: any = totalMonthlyExpenses(monthlyExpenses);
-  return totalIncome - totalExpenses;
+function remaining(totalIncome: any, totalExpense: any) {
+  return totalIncome - totalExpense;
 }
 
 export default function Dashboard() {
@@ -96,20 +118,17 @@ export default function Dashboard() {
   const usedMonths: any = [];
 
   if (monthlyIncomes && monthlyExpenses) {
-
-    monthlyIncomes.map((income: monthlyIncomes) => {
-      const monthName = months[income.month - 1];
-      const year = income.year;
-      const totalIncome = totalMonthlyIncome(monthlyIncomes);
-      const totalExpense = totalMonthlyExpenses(monthlyExpenses);
-      const remain = remaining(monthlyIncomes, monthlyExpenses);
-
-      if (!usedMonths.includes(`${monthName} ${year}`)) {
-        usedMonths.push(`${monthName} ${year}`);
+    // check both arrays for unique months and, when found, add to tableRows
+    monthlyIncomes.forEach((income) => {
+      if (!usedMonths.includes(income.month)) {
+        usedMonths.push(income.month);
+        const totalIncome = monthsIncome(monthlyIncomes, income.month);
+        const totalExpense = monthsExpenses(monthlyExpenses, income.month);
+        const remain = remaining(totalIncome, totalExpense);
         tableRows.push(
           <tr className="border-b border-gray-200">
             <td className="px-3 py-3 text-left">
-              {months[income.month - 1]} {income.year}
+              {months[income.month]} {income.year}
             </td>
             <td className="px-3 py-3 text-center bg-green-100">
               $ {totalIncome}
@@ -118,17 +137,48 @@ export default function Dashboard() {
               $ {totalExpense}
             </td>
             <td className="px-3 py-3 text-center">
-              { remain < 0 ? (
+              {remain < 0 ? (
                 <span className="text-red-500">-$ {decimalPlaces(-remain)}</span>
               ) : (
                 <span className="text-green-500">$ {decimalPlaces(remain)}</span>
-              )   
-              }
+              )}
             </td>
           </tr>
         );
+
+        monthlyExpenses.forEach((expense) => {
+          if (!usedMonths.includes(expense.month)) {
+            usedMonths.push(expense.month);
+            const totalIncome = monthsIncome(monthlyIncomes, expense.month);
+            const totalExpense = monthsExpenses(monthlyExpenses, expense.month);
+            const remain = remaining(totalIncome, totalExpense);
+            tableRows.push(
+              <tr className="border-b border-gray-200">
+                <td className="px-3 py-3 text-left">
+                  {months[expense.month]} {expense.year}
+                </td>
+                <td className="px-3 py-3 text-center bg-green-100">
+                  $ {totalIncome}
+                </td>
+                <td className="px-3 py-3 text-center bg-red-100">
+                  $ {totalExpense}
+                </td>
+                <td className="px-3 py-3 text-center">
+                  {remain < 0 ? (
+                    <span className="text-red-500">
+                      -$ {decimalPlaces(-remain)}
+                    </span>
+                  ) : (
+                    <span className="text-green-500">
+                      $ {decimalPlaces(remain)}
+                    </span>
+                  )}
+                </td>
+              </tr>
+            );
+          }
+        });
       }
-      return tableRows;
     });
   }
 
@@ -151,7 +201,7 @@ export default function Dashboard() {
             <tbody className="text-left">
               {tableRows.length === 0 ? (
                 <tr className="border-b border-gray-200">
-                  <td className="px-3 py-3 text-center" colSpan={3}>
+                  <td className="px-3 py-3 text-center" colSpan={4}>
                     No data to display
                   </td>
                 </tr>
