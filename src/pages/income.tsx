@@ -45,8 +45,9 @@ export default function Income() {
   const { data: session, status } = useSession();
 
   const user = session?.user?.id;
-  
+
   useEffect(()=> {
+    const data = async () => {
     fetch(`/api/income/getAll/${user}`, {
       method: "GET",
       headers: {
@@ -60,7 +61,9 @@ export default function Income() {
       .catch((err) => {
         console.log(err);
       });
-  }, [])
+    }
+    data();
+  })
 
   const getMonth = (month: number) => {
     return months[month];
@@ -72,34 +75,66 @@ export default function Income() {
 
   const tableHeaders: any = (
     <tr>
-      <th className="px-6 py-3 text-base">Date</th>
-      <th className="px-6 py-3 text-base">Income</th>
-      <th className="px-6 py-3 text-base">Amount</th>
+      <th className="px-6 py-3 text-base text-center">Date</th>
+      <th className="px-6 py-3 text-base text-center">Income</th>
+      <th className="px-6 py-3 text-base text-center">Amount</th>
       <th className="px-2 py-3"></th>
     </tr>
   );
 
 if(income){
-    tableRows = income.map((income: incomes) => (
-      <tr className="bg-grey-50 border-b-2">
-        <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
-          {date(getMonth(income.month), income.year)}
+
+  // Sort the data by month and year
+  income.sort((a, b) => {
+    if (a.year > b.year) {
+      return 1;
+    } else if (a.year < b.year) {
+      return -1;
+    } else {
+      if (a.month > b.month) {
+        return 1;
+      } else if (a.month < b.month) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+  });
+
+  // Create a table row for each income
+  tableRows = income.map((income, index) => {
+    let rowBG = index % 2 === 0 ? "bg-white" : "bg-gray-100";
+    return (
+      <tr key={index} className={rowBG}>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm text-gray-900 text-center">
+            {date(getMonth(income.month), income.year)}
+          </div>
         </td>
-        <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
-          {income.name}
+        <td className="px-6 py-4 whitespace-nowrap">
+          <div className="text-sm text-gray-900 text-center">
+            {income.name}
+          </div>
         </td>
-        <td className="px-6 py-2 text-base">${decimalPlaces(income.amount)}</td>
-        <td className="px-2 py-2 text-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
+        <td className="px-6 py-4 whitespace-nowrap text-center">
+          <div className="text-sm text-gray-900">
+            ${decimalPlaces(income.amount)}
+          </div>
+        </td>
+        <td className="whitespace-nowrap text-left text-sm font-medium">
+          <button
+            href="#"
+            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
+          >
             Edit
-          </button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            Delete
           </button>
         </td>
       </tr>
-    ));
+    );
+  });
+    
   }
+
 
   const showModal = () => {
     setModalShow(true);

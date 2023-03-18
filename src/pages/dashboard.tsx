@@ -51,29 +51,32 @@ export default function Dashboard() {
   const user = session?.user?.id;
 
   useEffect(() => {
-    Promise.all([
-      fetch(`/api/income/getAll/${user}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-      fetch(`/api/expense/getAll/${user}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-    ])
-      .then((responses) => Promise.all(responses.map((res) => res.json())))
-      .then((data) => {
-        setMonthlyIncomes(data[0]);
-        setMonthlyExpenses(data[1]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    const data = async () => {
+      Promise.all([
+        fetch(`/api/income/getAll/${user}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }),
+        fetch(`/api/expense/getAll/${user}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }),
+      ])
+        .then((responses) => Promise.all(responses.map((res) => res.json())))
+        .then((data) => {
+          setMonthlyIncomes(data[0]);
+          setMonthlyExpenses(data[1]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    data();
+  });
 
   const tableRows: any = [];
 
@@ -133,12 +136,9 @@ export default function Dashboard() {
       const remained = dateIncome - dateExpense;
 
       tableRows.push(
-        <tr
-          key={i}
-          className="border-b border-gray-200"
-        >
+        <tr key={i} className="border-b border-gray-200">
           <td className="px-3 py-3 text-center">
-            {months[Number(data.split("-")[0]) - 1]} {data.split("-")[1]}
+            {months[Number(data.split("-")[0])]} {data.split("-")[1]}
           </td>
           <td className="px-3 py-3 text-center bg-green-100">
             ${decimalPlaces(dateIncome)}
