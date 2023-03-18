@@ -2,20 +2,14 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import ProtectedPage from "@/pages/components/ProtectedPage";
-import { IconSelector } from "@tabler/icons-react";
+import { Map } from "@mui/icons-material";
 
-interface monthlyIncomes {
+interface monthlyData {
   name: string;
   amount: number;
   month: number;
   year: number;
-}
-
-interface monthlyExpenses {
-  name: string;
-  amount: number;
-  month: number;
-  year: number;
+  user: string;
 }
 
 function decimalPlaces(num: any) {
@@ -25,115 +19,63 @@ function decimalPlaces(num: any) {
   return parseInt("0").toFixed(2);
 }
 
-function monthsIncome(monthlyIncomes: monthlyIncomes[], month: number) {
-  const total = monthlyIncomes.reduce((acc, income) => {
-    if (income.month === month) {
-      return acc + income.amount;
-    }
-    return acc;
-  }, 0);
-
-  return decimalPlaces(total);
+function getMonthlyTotal(data: monthlyData[], month: number) {
+  const total = data
+    .filter((item) => item.month === month)
+    .reduce((acc, item) => {
+      return acc + item.amount;
+    }, 0);
+  return total;
 }
 
-function monthsExpenses(monthlyExpenses: monthlyExpenses[], month: number) {
-  const total = monthlyExpenses.reduce((acc, expense) => {
-    if (expense.month === month) {
-      return acc + expense.amount;
-    }
-    return acc;
-  }, 0);
-
-  return decimalPlaces(total);
-}
-
-function totalMonthlyIncome(monthlyIncomes: monthlyIncomes[]) {
-  const total = monthlyIncomes.reduce((acc, income) => {
-    return acc + income.amount;
-  }, 0);
-
-  return decimalPlaces(total);
-}
-
-function totalMonthlyExpenses(monthlyExpenses: monthlyExpenses[]) {
-  const total = monthlyExpenses.reduce((acc, expense) => {
-    return acc + expense.amount;
+function getTotal(data: monthlyData[]) {
+  const total = data.reduce((acc, item) => {
+    return acc + item.amount;
   }, 0);
   return decimalPlaces(total);
 }
 
-function remaining(totalIncome: any, totalExpense: any) {
-  return totalIncome - totalExpense;
-}
-
-function sortAscending(a: any, b: any) {
-  if (a.year < b.year) {
-    return -1;
-  }
-  if (a.year > b.year) {
-    return 1;
-  }
-  if (a.month < b.month) {
-    return -1;
-  }
-  if (a.month > b.month) {
-    return 1;
-  }
-  return 0;
-}
-
-function sortDescending(a: any, b: any) {
-  if (a.year > b.year) {
-    return -1;
-  }
-  if (a.year < b.year) {
-    return 1;
-  }
-  if (a.month > b.month) {
-    return -1;
-  }
-  if (a.month < b.month) {
-    return 1;
-  }
+function sortMonthlyData(a: monthlyData, b: monthlyData) {
+  if (a.year < b.year) return -1;
+  if (a.year > b.year) return 1;
+  if (a.month < b.month) return -1;
+  if (a.month > b.month) return 1;
   return 0;
 }
 
 export default function Dashboard() {
-  const [monthlyIncomes, setMonthlyIncomes] = useState<monthlyIncomes[] | null>(
-    null
-  );
-  const [monthlyExpenses, setMonthlyExpenses] = useState<
-    monthlyExpenses[] | null
-  >(null);
-  const [sort, setSort] = useState("ascending");
+  const [monthlyIncomes, setMonthlyIncomes] = useState<monthlyData[]>([]);
+  const [monthlyExpenses, setMonthlyExpenses] = useState<monthlyData[]>([]);
+
+  const { data: session, status } = useSession();
+  const user = session?.user?.id;
 
   useEffect(() => {
-    fetch("/api/income/show", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    Promise.all([
+      fetch(`/api/income/getAll/${user}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      fetch(`/api/expense/getAll/${user}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    ])
+      .then((responses) => Promise.all(responses.map((res) => res.json())))
       .then((data) => {
-        setMonthlyIncomes(data);
-      })
-      .catch((err) => console.log(err));
-
-    fetch("/api/expenses/get", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setMonthlyExpenses(data);
+        setMonthlyIncomes(data[0]);
+        setMonthlyExpenses(data[1]);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const tableRows: any = [];
 
   const months = [
     "January",
@@ -149,74 +91,74 @@ export default function Dashboard() {
     "November",
     "December",
   ];
-  const tableRows: any = [];
-  const usedMonths: any = [];
 
   if (monthlyIncomes && monthlyExpenses) {
-    monthlyIncomes.forEach((income) => {
-      if (!usedMonths.includes(income.month)) {
-        usedMonths.push(income.month);
-        const totalIncome = monthsIncome(monthlyIncomes, income.month);
-        const totalExpense = monthsExpenses(monthlyExpenses, income.month);
-        const remain = remaining(totalIncome, totalExpense);
-        tableRows.push(
-          <tr className="border-b border-gray-200">
-            <td className="px-3 py-3 text-center">
-              {months[income.month]} {income.year}
-            </td>
-            <td className="px-3 py-3 text-center bg-green-100">
-              $ {totalIncome}
-            </td>
-            <td className="px-3 py-3 text-center bg-red-100">
-              $ {totalExpense}
-            </td>
-            <td className="px-3 py-3 text-center">
-              {remain < 0 ? (
-                <span className="text-red-500">
-                  -$ {decimalPlaces(-remain)}
-                </span>
-              ) : (
-                <span className="text-green-500">
-                  $ {decimalPlaces(remain)}
-                </span>
-              )}
-            </td>
-          </tr>
-        );
+    const usedDates: any = {};
 
-        monthlyExpenses.forEach((expense) => {
-          if (!usedMonths.includes(expense.month)) {
-            usedMonths.push(expense.month);
-            const totalIncome = monthsIncome(monthlyIncomes, expense.month);
-            const totalExpense = monthsExpenses(monthlyExpenses, expense.month);
-            const remain = remaining(totalIncome, totalExpense);
-            tableRows.push(
-              <tr className="border-b border-gray-200">
-                <td className="px-3 py-3 text-center">
-                  {months[expense.month]} {expense.year}
-                </td>
-                <td className="px-3 py-3 text-center bg-green-100">
-                  $ {totalIncome}
-                </td>
-                <td className="px-3 py-3 text-center bg-red-100">
-                  $ {totalExpense}
-                </td>
-                <td className="px-3 py-3 text-center">
-                  {remain < 0 ? (
-                    <span className="text-red-500">
-                      -$ {decimalPlaces(-remain)}
-                    </span>
-                  ) : (
-                    <span className="text-green-500">
-                      $ {decimalPlaces(remain)}
-                    </span>
-                  )}
-                </td>
-              </tr>
-            );
-          }
-        });
+    monthlyIncomes.forEach((data) => {
+      if (!usedDates[`${data.month}-${data.year}`]) {
+        usedDates[`${data.month}-${data.year}`] = {
+          income: Number(data.amount),
+          expense: 0,
+        };
+      } else {
+        usedDates[`${data.month}-${data.year}`].income += Number(data.amount);
       }
+    });
+
+    monthlyExpenses.forEach((data) => {
+      if (!usedDates[`${data.month}-${data.year}`]) {
+        usedDates[`${data.month}-${data.year}`] = {
+          income: 0,
+          expense: Number(data.amount),
+        };
+      } else {
+        usedDates[`${data.month}-${data.year}`].expense += Number(data.amount);
+      }
+    });
+
+    const sortedDates = Object.keys(usedDates).sort((a, b) => {
+      const [aMonth, aYear] = a.split("-");
+      const [bMonth, bYear] = b.split("-");
+      if (aYear < bYear) return -1;
+      if (aYear > bYear) return 1;
+      if (aMonth < bMonth) return -1;
+      if (aMonth > bMonth) return 1;
+      return 0;
+    });
+
+    sortedDates.forEach((data, i) => {
+      const dateIncome = usedDates[data].income;
+      const dateExpense = usedDates[data].expense;
+      const remained = dateIncome - dateExpense;
+
+      tableRows.push(
+        <tr
+          key={i}
+          className="border-b border-gray-200"
+        >
+          <td className="px-3 py-3 text-center">
+            {months[Number(data.split("-")[0]) - 1]} {data.split("-")[1]}
+          </td>
+          <td className="px-3 py-3 text-center bg-green-100">
+            ${decimalPlaces(dateIncome)}
+          </td>
+          <td className="px-3 py-3 text-center bg-red-100">
+            ${decimalPlaces(dateExpense)}
+          </td>
+          <td className="px-3 py-3 text-center">
+            {remained < 0 ? (
+              <span className="text-red-500">
+                -$ {decimalPlaces(-remained)}
+              </span>
+            ) : (
+              <span className="text-green-500">
+                $ {decimalPlaces(remained)}
+              </span>
+            )}
+          </td>
+        </tr>
+      );
     });
   }
 
@@ -230,9 +172,7 @@ export default function Dashboard() {
             </caption>
             <thead className="text-xs text-gray-700 uppercase bg-grey-100">
               <tr className="border-b-2 border-gray-400">
-                <th className="px-0 py-3 text-base w-[120px]">
-                  Date
-                </th>
+                <th className="px-0 py-3 text-base w-[120px]">Date</th>
                 <th className="px-3 py-3 text-base">Total Income</th>
                 <th className="px-3 py-3 text-base">Total Expenses</th>
                 <th className="px-3 py-3 text-base">Remaining</th>
