@@ -4,18 +4,20 @@ import { useSession } from "next-auth/react";
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
 
-interface monthlyIncomes {
-  name: string;
-  amount: number;
+interface incomes {
   month: number;
   year: number;
+  name: string;
+  amount: number;
 }
 
 export default function Income() {
-  const [monthlyIncome, setMonthlyIncome] = useState<monthlyIncomes[] | null>(
+  const [income, setIncome] = useState<incomes[] | null>(
     null
   );
+
   const [modalShow, setModalShow] = useState(false);
+
   const months = [
     "January",
     "February",
@@ -30,36 +32,22 @@ export default function Income() {
     "November",
     "December",
   ];
+
   let tableRows;
+
+  const decimalPlaces = (num: any) => {
+    if (num){
+      return parseInt(num).toFixed(2);
+    }
+    return parseInt('0').toFixed(2);
+  };
 
   const { data: session, status } = useSession();
 
   const user = session?.user?.id;
-
-  const deleteItem = (
-    itemID: string
-  ) => {
-    fetch(`/api/income/delete/${itemID}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  const editItem = (e: any) => {
-    e.preventDefault();
-    alert("edit");
-  }
-
-
-  useEffect(() => {
-    fetch("/api/income/showIncomes", {
+  
+  useEffect(()=> {
+    fetch(`/api/income/getAll/${user}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,10 +55,12 @@ export default function Income() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setMonthlyIncome(data);
+        setIncome(data);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
 
   const getMonth = (month: number) => {
     return months[month];
@@ -80,25 +70,18 @@ export default function Income() {
     return `${month} ${year}`;
   };
 
-  const decimalPlaces = (num: any) => {
-    if (num){
-      return parseInt(num).toFixed(2);
-    }
-    return parseInt('0').toFixed(2);
-  };
-
   const tableHeaders: any = (
     <tr>
       <th className="px-6 py-3 text-base">Date</th>
       <th className="px-6 py-3 text-base">Income</th>
       <th className="px-6 py-3 text-base">Amount</th>
-      <th className="px-6 py-3"></th>
+      <th className="px-2 py-3"></th>
     </tr>
   );
 
-  if(monthlyIncome){
-    tableRows = monthlyIncome.map((income: monthlyIncomes, i:number) => (
-      <tr className="bg-grey-50 border-b-2" key={i}>
+if(income){
+    tableRows = income.map((income: incomes) => (
+      <tr className="bg-grey-50 border-b-2">
         <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
           {date(getMonth(income.month), income.year)}
         </td>
@@ -106,20 +89,17 @@ export default function Income() {
           {income.name}
         </td>
         <td className="px-6 py-2 text-base">${decimalPlaces(income.amount)}</td>
-        <td className="px-6 py-2 text-center">
+        <td className="px-2 py-2 text-center">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
             Edit
           </button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>{
-            console.log('hit')
-          }}>
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Delete
           </button>
         </td>
       </tr>
     ));
   }
-
 
   const showModal = () => {
     setModalShow(true);
@@ -136,10 +116,10 @@ export default function Income() {
           <Modal hideModal={hideModal} modalType={"Income"} user={user}/>
         ) : null}
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
             <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
-              Income
+              Incomes
               <div>
                 <button
                   className="float-right block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -153,8 +133,8 @@ export default function Income() {
             <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
               {tableHeaders}
             </thead>
-            <tbody>{
-              tableRows ? (
+            <tbody>
+              {tableRows ? (
                 tableRows
               ) : (
                 <tr className="border-b border-gray-200">
@@ -165,7 +145,8 @@ export default function Income() {
                     No data to display
                   </td>
                 </tr>
-              )}</tbody>
+              )}
+            </tbody>
           </table>
         </div>
       </div>

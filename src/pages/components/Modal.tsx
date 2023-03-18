@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { IconX } from "@tabler/icons-react";
 
-import { postIncome, postExpense } from "@/lib/helpers/postItems";
-
 export default function Modal({ hideModal, modalType, user }: any) {
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
@@ -12,21 +10,46 @@ export default function Modal({ hideModal, modalType, user }: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     modalType === "Income"
-      ? postIncome({
-          name,
-          amount,
-          month,
-          year,
-          user
-      })
-      : postExpense({
-          name,
-          amount,
-          month,
-          year,
-          user
-      });
-
+      ? fetch(`/api/income/post`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            amount,
+            month,
+            year,
+            user
+          }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      : fetch(`/api/expense/post`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            amount,
+            month,
+            year,
+            user
+          }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       hideModal();
   };
 

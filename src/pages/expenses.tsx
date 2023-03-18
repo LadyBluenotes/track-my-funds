@@ -11,7 +11,7 @@ interface expenses {
   amount: number;
 }
 
-export default function Income() {
+export default function Expense() {
   const [expense, setExpense] = useState<expenses[] | null>(
     null
   );
@@ -43,7 +43,7 @@ export default function Income() {
   const user = session?.user?.id;
 
   useEffect(()=> {
-    fetch("http://localhost:3000/api/expenses/showExpenses", {
+    fetch(`/api/expense/getAll/${user}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -69,61 +69,27 @@ export default function Income() {
   const tableHeaders: any = (
     <tr>
       <th className="px-6 py-3 text-base">Date</th>
-      <th className="px-6 py-3 text-base">Income</th>
+      <th className="px-6 py-3 text-base">Expense</th>
       <th className="px-6 py-3 text-base">Amount</th>
       <th className="px-2 py-3"></th>
     </tr>
   );
 
 if(expense){
-    tableRows = expense.map((income: expenses) => (
+    tableRows = expense.map((expense: expenses) => (
       <tr className="bg-grey-50 border-b-2">
         <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
-          {date(getMonth(income.month), income.year)}
+          {date(getMonth(expense.month), expense.year)}
         </td>
         <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
-          {income.name}
+          {expense.name}
         </td>
-        <td className="px-6 py-2 text-base">${decimalPlaces(income.amount)}</td>
+        <td className="px-6 py-2 text-base">${decimalPlaces(expense.amount)}</td>
         <td className="px-2 py-2 text-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5"
-          onClick={()=>{
-            fetch("/api/expenses/editExpense", {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-               
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(data);
-              })
-              .catch((err) => console.log(err));
-          }}
-          >
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
             Edit
           </button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => {
-            fetch("/api/expenses/deleteExpense", {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-               
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(data);
-              })
-              .catch((err) => console.log(err));
-          }}
-          >
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Delete
           </button>
         </td>
