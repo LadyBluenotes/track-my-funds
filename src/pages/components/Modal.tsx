@@ -26,8 +26,7 @@ export default function Modal({ hideModal, modalType }: any) {
       });
 
       hideModal();
-  }
-
+  };
 
   return (
     <div

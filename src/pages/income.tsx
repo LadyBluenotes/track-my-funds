@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import ProtectedPage from "./components/ProtectedPage";
 import Modal from "./components/Modal";
+import ProtectedPage from "./components/ProtectedPage";
 
 interface monthlyIncomes {
   name: string;
@@ -31,6 +31,29 @@ export default function Income() {
   ];
   let tableRows;
 
+
+  const deleteItem = (
+    itemID: string
+  ) => {
+    fetch(`/api/income/delete/${itemID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const editItem = (e: any) => {
+    e.preventDefault();
+    alert("edit");
+  }
+
+
   useEffect(() => {
     fetch("/api/income/showIncomes", {
       method: "GET",
@@ -57,6 +80,7 @@ export default function Income() {
     if (num){
       return parseInt(num).toFixed(2);
     }
+    return parseInt('0').toFixed(2);
   };
 
   const tableHeaders: any = (
@@ -69,20 +93,22 @@ export default function Income() {
   );
 
   if(monthlyIncome){
-    tableRows = monthlyIncome.map((income: monthlyIncomes) => (
-      <tr className="bg-grey-50 border-b-2">
+    tableRows = monthlyIncome.map((income: monthlyIncomes, i:number) => (
+      <tr className="bg-grey-50 border-b-2" key={i}>
         <td className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap text-base">
           {date(getMonth(income.month), income.year)}
         </td>
         <td className="px-6 py-2 text-gray-900 whitespace-nowrap text-base">
           {income.name}
         </td>
-        <td className="px-6 py-2 text-base">{'$' + decimalPlaces(income.amount)}</td>
+        <td className="px-6 py-2 text-base">${decimalPlaces(income.amount)}</td>
         <td className="px-6 py-2 text-center">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">
             Edit
           </button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>{
+            console.log('hit')
+          }}>
             Delete
           </button>
         </td>
@@ -106,14 +132,12 @@ export default function Income() {
           <Modal hideModal={hideModal} modalType={"Income"} />
         ) : null}
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
             <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
-              Incomes
+              Income
               <div>
                 <button
-                  data-modal-target="incomeModal"
-                  data-modal-toggle="incomeModal"
                   className="float-right block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   type="button"
                   onClick={showModal}

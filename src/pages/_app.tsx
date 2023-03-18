@@ -20,7 +20,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       </Head>
       <main
         id="main"
-        className="bg-gradient-to-b from-white to-indigo-300 overflow-auto"
+        className="bg-gradient-to-b from-white to-indigo-300 overflow-auto flex flex-col min-h-screen"
       >
         <SessionProvider session={session}>
           <Nav />

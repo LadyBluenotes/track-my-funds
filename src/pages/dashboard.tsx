@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ProtectedPage from "@/pages/components/ProtectedPage";
 
@@ -12,6 +12,21 @@ interface monthlyIncomes {
 interface monthlyExpenses {
   name: string;
   amount: number;
+}
+
+function totalMonthlyIncome(monthlyIncomes: monthlyIncomes[]) {
+  const total = monthlyIncomes.reduce((acc, income) => {
+    return acc + income.amount;
+  }, 0);
+
+  return total;
+}
+
+function totalMonthlyExpenses(monthlyExpenses: monthlyExpenses[]) {
+  const total = monthlyExpenses.reduce((acc, expense) => {
+    return acc + expense.amount;
+  }, 0);
+  return total;
 }
 
 export default function Dashboard() {
@@ -68,22 +83,11 @@ export default function Dashboard() {
   const usedMonths: any = [];
 
   if (monthlyIncomes && monthlyExpenses) {
-    const monthlyTotalIncome = (month: any, year: any) => {
-      let total = 0;
-      monthlyIncomes.forEach((income: monthlyIncomes) => {
-        if (income.month === month && income.year === year) {
-          total += income.amount;
-        }
-      });
-      return total;
-    };
-
     const remaining = (month: any, year: any) => {
-      let total: any = monthlyTotalIncome(month, year);
-      monthlyExpenses.forEach((expense: monthlyExpenses) => {
-        total -= expense.amount;
-      });
-      return total;
+      return (
+        totalMonthlyIncome(monthlyIncomes) -
+        totalMonthlyExpenses(monthlyExpenses)
+      );
     };
 
     monthlyIncomes.map((income: monthlyIncomes) => {
@@ -99,14 +103,12 @@ export default function Dashboard() {
               {monthName} {year}
             </td>
             <td className="px-3 py-3 text-center bg-green-100">
-              ${monthlyTotalIncome(month, year)}
+              ${totalMonthlyIncome(monthlyIncomes)}
             </td>
-            {monthlyExpenses.map((expense: monthlyExpenses) => (
-              <td className="px-3 py-3 text-center bg-red-100">
-                ${expense.amount}
-              </td>
-            ))}
-            <td className="px-3 py-3 text-right">
+            <td className="px-3 py-3 text-center bg-red-100">
+              ${totalMonthlyExpenses(monthlyExpenses)}
+            </td>
+            <td className="px-3 py-3 text-center">
               {remaining(month, year) < 0 ? (
                 <span className="text-red-500">
                   -${remaining(month, year) * -1}
@@ -127,18 +129,18 @@ export default function Dashboard() {
   return (
     <ProtectedPage>
       <div className="pb-20 pt-20">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto border border-gray-200">
           <table className="text-sm text-center text-gray-500 w-11/12 m-auto">
             <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
               Your Financial Dashboard
             </caption>
             <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
-                <tr>
-                  <th className="px-0 py-3 text-sm w-[120px]">Month</th>
-                  <th className="px-3 py-3 text-sm">Total Income</th>
-                    <th className="px-3 py-3 text-sm">Total Expenses</th>
-                  <th className="px-3 py-3 text-sm">Remaining</th>
-                </tr>
+              <tr>
+                <th className="px-0 py-3 text-sm w-[120px]">Month</th>
+                <th className="px-3 py-3 text-sm">Total Income</th>
+                <th className="px-3 py-3 text-sm">Total Expenses</th>
+                <th className="px-3 py-3 text-sm">Remaining</th>
+              </tr>
             </thead>
             <tbody className="text-left">
               {tableRows.length === 0 ? (
