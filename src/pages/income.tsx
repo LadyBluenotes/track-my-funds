@@ -127,7 +127,7 @@ export default function Income() {
 
   return (
     <ProtectedPage>
-      <div className="pb-20 pt-20">
+      <div className="pb-20 pt-20 w-10/12 mx-auto">
         {modalShow ? (
           <Modal hideModal={hideModal} modalType={"Income"} />
         ) : null}

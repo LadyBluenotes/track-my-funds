@@ -14,19 +14,32 @@ interface monthlyExpenses {
   amount: number;
 }
 
+function decimalPlaces(num: any) {
+  if (num){
+    return parseInt(num).toFixed(2);
+  }
+  return parseInt('0').toFixed(2);
+};
+
 function totalMonthlyIncome(monthlyIncomes: monthlyIncomes[]) {
   const total = monthlyIncomes.reduce((acc, income) => {
     return acc + income.amount;
   }, 0);
 
-  return total;
+  return decimalPlaces(total);
 }
 
 function totalMonthlyExpenses(monthlyExpenses: monthlyExpenses[]) {
   const total = monthlyExpenses.reduce((acc, expense) => {
     return acc + expense.amount;
   }, 0);
-  return total;
+  return decimalPlaces(total);
+}
+
+function remaining(monthlyIncomes: monthlyIncomes[], monthlyExpenses: monthlyExpenses[]) {
+  const totalIncome: any = totalMonthlyIncome(monthlyIncomes);
+  const totalExpenses: any = totalMonthlyExpenses(monthlyExpenses);
+  return totalIncome - totalExpenses;
 }
 
 export default function Dashboard() {
@@ -83,41 +96,34 @@ export default function Dashboard() {
   const usedMonths: any = [];
 
   if (monthlyIncomes && monthlyExpenses) {
-    const remaining = (month: any, year: any) => {
-      return (
-        totalMonthlyIncome(monthlyIncomes) -
-        totalMonthlyExpenses(monthlyExpenses)
-      );
-    };
 
     monthlyIncomes.map((income: monthlyIncomes) => {
-      let monthName = months[income.month - 1];
-      let month = income.month;
-      let year = income.year;
+      const monthName = months[income.month - 1];
+      const year = income.year;
+      const totalIncome = totalMonthlyIncome(monthlyIncomes);
+      const totalExpense = totalMonthlyExpenses(monthlyExpenses);
+      const remain = remaining(monthlyIncomes, monthlyExpenses);
 
       if (!usedMonths.includes(`${monthName} ${year}`)) {
         usedMonths.push(`${monthName} ${year}`);
         tableRows.push(
           <tr className="border-b border-gray-200">
             <td className="px-3 py-3 text-left">
-              {monthName} {year}
+              {months[income.month - 1]} {income.year}
             </td>
             <td className="px-3 py-3 text-center bg-green-100">
-              ${totalMonthlyIncome(monthlyIncomes)}
+              $ {totalIncome}
             </td>
             <td className="px-3 py-3 text-center bg-red-100">
-              ${totalMonthlyExpenses(monthlyExpenses)}
+              $ {totalExpense}
             </td>
             <td className="px-3 py-3 text-center">
-              {remaining(month, year) < 0 ? (
-                <span className="text-red-500">
-                  -${remaining(month, year) * -1}
-                </span>
+              { remain < 0 ? (
+                <span className="text-red-500">-$ {decimalPlaces(-remain)}</span>
               ) : (
-                <span className="text-green-500">
-                  ${remaining(month, year)}
-                </span>
-              )}
+                <span className="text-green-500">$ {decimalPlaces(remain)}</span>
+              )   
+              }
             </td>
           </tr>
         );

@@ -66,7 +66,7 @@ export default function Income() {
       <th className="px-6 py-3 text-base">Date</th>
       <th className="px-6 py-3 text-base">Income</th>
       <th className="px-6 py-3 text-base">Amount</th>
-      <th className="px-6 py-3"></th>
+      <th className="px-2 py-3"></th>
     </tr>
   );
 
@@ -80,7 +80,7 @@ if(expense){
           {income.name}
         </td>
         <td className="px-6 py-2 text-base">${decimalPlaces(income.amount)}</td>
-        <td className="px-6 py-2 text-center">
+        <td className="px-2 py-2 text-center">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5"
           onClick={()=>{
             fetch("/api/expenses/editExpense", {
@@ -136,7 +136,7 @@ if(expense){
 
   return (
     <ProtectedPage>
-      <div className="pb-20 pt-20">
+      <div className="pb-20 pt-20 w-10/12 mx-auto">
         {modalShow ? (
           <Modal hideModal={hideModal} modalType={"Expense"} />
         ) : null}
