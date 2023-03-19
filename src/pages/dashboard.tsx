@@ -76,7 +76,7 @@ export default function Dashboard() {
         });
     };
     data();
-  });
+  }, [user]);
 
   const tableRows: any = [];
 
