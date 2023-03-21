@@ -14,7 +14,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
     e.preventDefault();
 
     try {
-      const response = await fetch(`/api/${modalType.toLowerCase()}/put/${itemID}`, {
+      const res = await fetch(`/api/${modalType.toLowerCase()}/put/${itemID}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -28,11 +28,13 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
         }),
       });
 
-      if (!response.ok) {
+      if (!res.ok) {
         throw new Error(`Error updating ${modalType.toLowerCase()}.`);
       }
 
-      const updatedItem = await response.json();
+      await res.status(200).json({
+        message: `${modalType} updated successfully.`,
+      });
 
     } catch (error) {
       console.error(error);
@@ -43,9 +45,22 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
 
   const handleDelete = async (e: any) => {
     e.preventDefault();
-
-
-  }
+    try {
+      const response = await fetch(`/api/${modalType.toLowerCase()}/delete/${itemID}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${modalType.toLowerCase()}.`);
+      }
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+    hideEditModal();
+    window.location.reload();
+  };
+  
 
   return (
     <div
@@ -150,14 +165,14 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
             >
               Update
             </button>
-            <button
+          </div>
+          <button
               type="submit"
-              className="w-full px-4 py-2 mt-2 text-white bg-red-600 rounded-md hover:bg-red-500 focus:bg-red-500 focus:outline-none"
+              className="w-full px-4 py-2 mt-0 text-white bg-red-600 rounded-md hover:bg-red-500 focus:bg-red-500 focus:outline-none"
               onClick={handleDelete}
             >
               Delete
             </button>
-          </div>
         </form>
       </div>
     </div>

@@ -4,7 +4,6 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log("Request: ", req.body);
     const client = await clientPromise;
     const db = client.db("expenses");
 
@@ -23,7 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if(!expense) return res.status(404).json({ message: "Expense not found" });
 
     res.status(200).json(expense);
-
 
   } catch (error) {
     console.error(error);
