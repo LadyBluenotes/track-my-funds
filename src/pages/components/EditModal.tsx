@@ -7,35 +7,38 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
   const [name, setName] = useState(item.name);
   const [month, setMonth] = useState(item.month);
   const [year, setYear] = useState(item.year);
+  const [user, setUser] = useState(item.user);
   const itemID = item._id;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const res = await fetch(`/api/expense/edit/${itemID}`, {
+  try {
+    const response = await fetch(`/api/expense/put/${itemID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount,
-        name,
-        month,
-        year,
+        name: name,
+        amount: amount,
+        month: month,
+        year: year,
+        user: user,
       }),
     });
 
-    const data = await res.json();
-    console.log(data);
-
-
-    if (!res.ok) {
-        throw new Error(data.message || "Something went wrong!");
+    if (!response.ok) {
+      throw new Error("Failed to update expense");
     }
 
-    hideEditModal();
+    const updatedExpense = await response.json();
 
+    console.log("Updated expense:", updatedExpense);
+  } catch (error) {
+    console.error(error);
   }
+  };
 
   return (
     <div
@@ -90,7 +93,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
               placeholder="0.00"
               type="number"
               value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(e.target.value)}
               className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -130,7 +133,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
                 name="year"
                 placeholder="2023"
                 value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
+                onChange={(e) => setYear(e.target.value)}
                 type="number"
                 className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />

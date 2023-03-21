@@ -7,9 +7,10 @@ import ProtectedPage from "./components/ProtectedPage";
 
 interface expenses {
   month: number;
-  year: number;
+  year: string;
+  user: string;
   name: string;
-  amount: number;
+  amount: string;
 }
 
 export default function Expense() {
@@ -18,6 +19,8 @@ export default function Expense() {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [item, setItem] = useState(null);
+  const { data: session, status } = useSession();
+  const user = session?.user?.id;
 
   const showEditModal = (itemInfo: any) => {
     setItem(itemInfo);
@@ -59,10 +62,6 @@ export default function Expense() {
     }
     return parseInt("0").toFixed(2);
   };
-
-  const { data: session, status } = useSession();
-
-  const user = session?.user?.id;
 
   useEffect(() => {
     const data = async () => {
@@ -142,9 +141,7 @@ export default function Expense() {
             <button 
             className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
             onClick={() => {
-              showEditModal(item);
-            }}
-            >
+              showEditModal(item)}}>
               Edit
             </button>
           </td>
