@@ -51,6 +51,7 @@ export default function Modal({ hideModal, modalType, user }: any) {
           console.log(err);
         })
       hideModal();
+      window.location.reload();
   };
 
   return (

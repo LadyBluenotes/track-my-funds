@@ -182,7 +182,7 @@ export default function Income() {
               {tableHeaders}
             </thead>
             <tbody>
-              {tableRows ? (
+              {income?.length !== 0 ? (
                 tableRows
               ) : (
                 <tr className="border-b border-gray-200">
