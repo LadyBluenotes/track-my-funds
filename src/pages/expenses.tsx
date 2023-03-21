@@ -58,26 +58,26 @@ export default function Expense() {
 
   const decimalPlaces = (num: any) => {
     if (num) {
-      return parseInt(num).toFixed(2);
+      return num.toFixed(2);
     }
-    return parseInt("0").toFixed(2);
+    return 0.00;
   };
 
   useEffect(() => {
     const data = async () => {
-    fetch(`/api/expense/getAll/${user}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setExpense(data);
+      fetch(`/api/expense/getAll/${user}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setExpense(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     data();
   }, [user]);
@@ -118,10 +118,9 @@ export default function Expense() {
 
     tableRows = expense.map((expense, index) => {
       let rowBG = index % 2 === 0 ? "bg-white" : "bg-gray-100";
-      let id = expense.month + expense.year + expense.name;
       const item = expense as any;
       return (
-        <tr key={id} className={rowBG}>
+        <tr key={index} className={rowBG}>
           <td className="px-6 py-4 whitespace-nowrap">
             <div className="text-sm text-gray-900 text-center">
               {date(getMonth(expense.month), expense.year)}
@@ -134,14 +133,16 @@ export default function Expense() {
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-center">
             <div className="text-sm text-gray-900">
-              ${decimalPlaces(expense.amount)}
+              ${decimalPlaces(Number(expense.amount))}
             </div>
           </td>
           <td className="whitespace-nowrap text-left text-sm font-medium">
-            <button 
-            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
-            onClick={() => {
-              showEditModal(item)}}>
+            <button
+              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
+              onClick={() => {
+                showEditModal(item);
+              }}
+            >
               Edit
             </button>
           </td>
@@ -157,7 +158,11 @@ export default function Expense() {
           <Modal hideModal={hideModal} modalType={"Expense"} user={user} />
         ) : null}
         {editModalShow ? (
-          <EditModal hideEditModal={hideEditModal} modalType={"Expense"} item={item} />
+          <EditModal
+            hideEditModal={hideEditModal}
+            modalType={"Expense"}
+            item={item}
+          />
         ) : null}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">

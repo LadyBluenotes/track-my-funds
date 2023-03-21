@@ -10,35 +10,42 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
   const [user, setUser] = useState(item.user);
   const itemID = item._id;
 
-  const handleSubmit = async (e: any) => {
+  const handleEdit = async (e: any) => {
     e.preventDefault();
 
-  try {
-    const response = await fetch(`/api/expense/put/${itemID}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        amount: amount,
-        month: month,
-        year: year,
-        user: user,
-      }),
-    });
+    try {
+      const response = await fetch(`/api/${modalType.toLowerCase()}/put/${itemID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          amount: amount,
+          month: month,
+          year: year,
+          user: user,
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to update expense");
+      if (!response.ok) {
+        throw new Error(`Error updating ${modalType.toLowerCase()}.`);
+      }
+
+      const updatedItem = await response.json();
+
+    } catch (error) {
+      console.error(error);
     }
-
-    const updatedExpense = await response.json();
-
-    console.log("Updated expense:", updatedExpense);
-  } catch (error) {
-    console.error(error);
-  }
+    hideEditModal();
+    window.location.reload();
   };
+
+  const handleDelete = async (e: any) => {
+    e.preventDefault();
+
+
+  }
 
   return (
     <div
@@ -63,10 +70,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
         <h1 className="text-3xl font-semibold text-center text-indigo-600">
           Update {modalType}
         </h1>
-        <form
-          className="mt-4 mx-5"
-          onSubmit={handleSubmit}
-        >
+        <form className="mt-4 mx-5" onSubmit={handleEdit}>
           <div className="mb-2 mt-5">
             <label className="block text-sm font-semibold text-gray-800">
               {modalType}
@@ -146,12 +150,13 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
             >
               Update
             </button>
-            {/* <button
+            <button
               type="submit"
               className="w-full px-4 py-2 mt-2 text-white bg-red-600 rounded-md hover:bg-red-500 focus:bg-red-500 focus:outline-none"
+              onClick={handleDelete}
             >
               Delete
-            </button> */}
+            </button>
           </div>
         </form>
       </div>

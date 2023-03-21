@@ -7,20 +7,23 @@ import ProtectedPage from "./components/ProtectedPage";
 
 interface incomes {
   month: number;
-  year: number;
+  year: string;
+  user: string;
   name: string;
-  amount: number;
+  amount: string;
 }
 
 export default function Income() {
-  const [income, setIncome] = useState<incomes[] | null>(
-    null
-  );
+  const [income, setIncome] = useState<incomes[] | null>(null);
 
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [item, setItem] = useState(null);
+  const { data: session, status } = useSession();
+  const user = session?.user?.id;
 
-  const showEditModal = () => {
+  const showEditModal = (itemInfo: any) => {
+    setItem(itemInfo);
     setEditModalShow(true);
   };
 
@@ -54,34 +57,30 @@ export default function Income() {
   let tableRows;
 
   const decimalPlaces = (num: any) => {
-    if (num){
-      return parseInt(num).toFixed(2);
+    if (num) {
+      return num.toFixed(2);
     }
-    return parseInt('0').toFixed(2);
+    return 0.00;
   };
 
-  const { data: session, status } = useSession();
-
-  const user = session?.user?.id;
-
-  useEffect(()=> {
+  useEffect(() => {
     const data = async () => {
-    fetch(`/api/income/getAll/${user}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIncome(data);
+      fetch(`/api/income/getAll/${user}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
+        .then((res) => res.json())
+        .then((data) => {
+          setIncome(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     data();
-  }, [user])
+  }, [user]);
 
   const getMonth = (month: number) => {
     return months[month];
@@ -100,66 +99,70 @@ export default function Income() {
     </tr>
   );
 
-if(income){
-  income.sort((a, b) => {
-    if (a.year > b.year) {
-      return 1;
-    } else if (a.year < b.year) {
-      return -1;
-    } else {
-      if (a.month > b.month) {
+  if (income) {
+    income.sort((a, b) => {
+      if (a.year > b.year) {
         return 1;
-      } else if (a.month < b.month) {
+      } else if (a.year < b.year) {
         return -1;
       } else {
-        return 0;
+        if (a.month > b.month) {
+          return 1;
+        } else if (a.month < b.month) {
+          return -1;
+        } else {
+          return 0;
+        }
       }
-    }
-  });
+    });
 
-  tableRows = income.map((income, index) => {
-    let rowBG = index % 2 === 0 ? "bg-white" : "bg-gray-100";
-    return (
-      <tr key={index} className={rowBG}>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm text-gray-900 text-center">
-            {date(getMonth(income.month), income.year)}
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm text-gray-900 text-center">
-            {income.name}
-          </div>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">
-          <div className="text-sm text-gray-900">
-            ${decimalPlaces(income.amount)}
-          </div>
-        </td>
-        <td className="whitespace-nowrap text-left text-sm font-medium">
-          <button
-            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
-            onClick={() =>{
-              showEditModal();
-            }}
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
-    );
-  });
-    
+    tableRows = income.map((income, index) => {
+      let rowBG = index % 2 === 0 ? "bg-white" : "bg-gray-100";
+      const item = income as any;
+      return (
+        <tr key={index} className={rowBG}>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="text-sm text-gray-900 text-center">
+              {date(getMonth(income.month), income.year)}
+            </div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="text-sm text-gray-900 text-center">
+              {income.name}
+            </div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap text-center">
+            <div className="text-sm text-gray-900">
+              ${decimalPlaces(Number(income.amount))}
+            </div>
+          </td>
+          <td className="whitespace-nowrap text-left text-sm font-medium">
+            <button
+              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
+              onClick={() => {
+                showEditModal(item);
+              }}
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      );
+    });
   }
 
   return (
     <ProtectedPage>
       <div className="pb-20 pt-20 w-10/12 mx-auto">
         {modalShow ? (
-          <Modal hideModal={hideModal} modalType={"Income"} user={user}/>
+          <Modal hideModal={hideModal} modalType={"Income"} user={user} />
         ) : null}
-        {editModalShow ? (
-          <EditModal hideModal={hideEditModal} modalType={"Income"} user={user}/>
+         {editModalShow ? (
+          <EditModal
+            hideEditModal={hideEditModal}
+            modalType={"Income"}
+            item={item}
+          />
         ) : null}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
@@ -183,10 +186,7 @@ if(income){
                 tableRows
               ) : (
                 <tr className="border-b border-gray-200">
-                  <td
-                    className="px-3 py-3 text-center"
-                    colSpan={4}
-                  >
+                  <td className="px-3 py-3 text-center" colSpan={4}>
                     No data to display
                   </td>
                 </tr>
