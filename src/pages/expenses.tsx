@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
+import EditModal from "./components/EditModal";
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
 
@@ -15,6 +16,25 @@ export default function Expense() {
   const [expense, setExpense] = useState<expenses[] | null>(null);
 
   const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [item, setItem] = useState(null);
+
+  const showEditModal = (itemInfo: any) => {
+    setItem(itemInfo);
+    setEditModalShow(true);
+  };
+
+  const hideEditModal = () => {
+    setEditModalShow(false);
+  };
+
+  const showModal = () => {
+    setModalShow(true);
+  };
+
+  const hideModal = () => {
+    setModalShow(false);
+  };
 
   const months = [
     "January",
@@ -61,7 +81,7 @@ export default function Expense() {
       });
     };
     data();
-  });
+  }, [user]);
 
   const getMonth = (month: number) => {
     return months[month];
@@ -99,8 +119,10 @@ export default function Expense() {
 
     tableRows = expense.map((expense, index) => {
       let rowBG = index % 2 === 0 ? "bg-white" : "bg-gray-100";
+      let id = expense.month + expense.year + expense.name;
+      const item = expense as any;
       return (
-        <tr key={index} className={rowBG}>
+        <tr key={id} className={rowBG}>
           <td className="px-6 py-4 whitespace-nowrap">
             <div className="text-sm text-gray-900 text-center">
               {date(getMonth(expense.month), expense.year)}
@@ -117,7 +139,12 @@ export default function Expense() {
             </div>
           </td>
           <td className="whitespace-nowrap text-left text-sm font-medium">
-            <button className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200">
+            <button 
+            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
+            onClick={() => {
+              showEditModal(item);
+            }}
+            >
               Edit
             </button>
           </td>
@@ -126,19 +153,14 @@ export default function Expense() {
     });
   }
 
-  const showModal = () => {
-    setModalShow(true);
-  };
-
-  const hideModal = () => {
-    setModalShow(false);
-  };
-
   return (
     <ProtectedPage>
       <div className="pb-20 pt-20 w-10/12 mx-auto">
         {modalShow ? (
           <Modal hideModal={hideModal} modalType={"Expense"} user={user} />
+        ) : null}
+        {editModalShow ? (
+          <EditModal hideEditModal={hideEditModal} modalType={"Expense"} item={item} />
         ) : null}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">

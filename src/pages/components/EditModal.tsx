@@ -1,34 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import { IconX, IconTrash } from "@tabler/icons-react";
 
-export default function EditModal({ hideModal, modalType, user }: any) {
+export default function EditModal({ hideEditModal, modalType, item }: any) {
+  const [amount, setAmount] = useState(item.amount);
+  const [name, setName] = useState(item.name);
+  const [month, setMonth] = useState(item.month);
+  const [year, setYear] = useState(item.year);
+  const itemID = item._id;
 
-    const [amount, setAmount] = useState("");
-    const [name, setName] = useState("");
-    const [month, setMonth] = useState(0);
-    const [year, setYear] = useState("");
-  
-    const handleSubmit = (e: any) => {
-      e.preventDefault();
-        alert("submit")
-        hideModal();
-    };
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-    return (
-<div
+    const res = await fetch(`/api/expense/edit/${itemID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount,
+        name,
+        month,
+        year,
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+
+    if (!res.ok) {
+        throw new Error(data.message || "Something went wrong!");
+    }
+
+    hideEditModal();
+
+  }
+
+  return (
+    <div
       id="modal"
       table-index="-1"
       aria-hidden="true"
       className="fixed left-0 right-0 z-50 w-full pt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-100 w-100 backdrop-blur py-5 overflow-auto mt-2/12"
       style={{
-        display: hideModal ? "block" : "none",
+        display: hideEditModal ? "block" : "none",
       }}
     >
       <div className="p-10 bg-white rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto">
         <button
           type="button"
           className="float-right text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center"
-          onClick={hideModal}
+          onClick={() => {
+            hideEditModal();
+          }}
         >
           <IconX />
         </button>
@@ -47,7 +72,7 @@ export default function EditModal({ hideModal, modalType, user }: any) {
               required
               id="name"
               name={modalType}
-              placeholder={ modalType === "Income" ? "eg. Salary" : "eg. Rent"}
+              placeholder={modalType === "Income" ? "eg. Salary" : "eg. Rent"}
               value={name}
               onChange={(e) => setName(e.target.value)}
               type="text"
@@ -65,7 +90,7 @@ export default function EditModal({ hideModal, modalType, user }: any) {
               placeholder="0.00"
               type="number"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setAmount(Number(e.target.value))}
               className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -105,7 +130,7 @@ export default function EditModal({ hideModal, modalType, user }: any) {
                 name="year"
                 placeholder="2023"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => setYear(Number(e.target.value))}
                 type="number"
                 className="block w-full px-4 py-2 mt-2 text-indigo-600 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
@@ -113,20 +138,20 @@ export default function EditModal({ hideModal, modalType, user }: any) {
           </div>
           <div className="mb-2">
             <button
-                type="submit"
-                className="w-full px-4 py-2 mt-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:bg-indigo-500 focus:outline-none"
+              type="submit"
+              className="w-full px-4 py-2 mt-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:bg-indigo-500 focus:outline-none"
             >
-                Update
+              Update
             </button>
-            <button
-                type="submit"
-                className="w-full px-4 py-2 mt-2 text-white bg-red-600 rounded-md hover:bg-red-500 focus:bg-red-500 focus:outline-none"
+            {/* <button
+              type="submit"
+              className="w-full px-4 py-2 mt-2 text-white bg-red-600 rounded-md hover:bg-red-500 focus:bg-red-500 focus:outline-none"
             >
-                Delete
-            </button>
+              Delete
+            </button> */}
           </div>
         </form>
       </div>
     </div>
-    )
+  );
 }
