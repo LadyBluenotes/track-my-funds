@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { IconX } from "@tabler/icons-react";
 
 export default function EditModal({ hideEditModal, modalType, item }: any) {
-  const [amount, setAmount] = useState(item.amount);
-  const [name, setName] = useState(item.name);
-  const [month, setMonth] = useState(item.month);
-  const [year, setYear] = useState(item.year);
-  const [user, setUser] = useState(item.user);
+  const [amount, setAmount] = useState(item?.amount || '');
+  const [name, setName] = useState(item?.name || '');
+  const [month, setMonth] = useState(item?.month || '');
+  const [year, setYear] = useState(item?.year || '');
+  const [user, setUser] = useState(item?.user || '');
   const itemID = item._id;
 
   const handleEdit = async (e: any) => {
