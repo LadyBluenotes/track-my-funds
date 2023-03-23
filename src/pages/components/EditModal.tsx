@@ -20,11 +20,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: name,
-          amount: amount,
-          month: month,
-          year: year,
-          user: user,
+          name, amount, month, year, user
         }),
       });
 
