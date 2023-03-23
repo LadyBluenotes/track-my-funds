@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 
-import EditModal from "./components/EditModal";
+
+const EditModal = dynamic(() => import("./components/EditModal"), {ssr: false});
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
 import { IconPencil, IconPlus } from "@tabler/icons-react";
