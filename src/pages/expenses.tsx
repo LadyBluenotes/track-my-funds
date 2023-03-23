@@ -8,7 +8,7 @@ import { IconPencil, IconPlus } from "@tabler/icons-react";
 
 interface expenses {
   month: number;
-  year: string;
+  year: number;
   user: string;
   name: string;
   amount: string;
@@ -21,6 +21,8 @@ export default function Expense() {
   const [editModalShow, setEditModalShow] = useState(false);
   const [item, setItem] = useState(null);
   const { data: session, status } = useSession();
+
+  // @ts-expect-error
   const user = session?.user?.id;
 
   const showEditModal = (itemInfo: any) => {

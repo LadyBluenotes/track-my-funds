@@ -47,6 +47,8 @@ export default function Dashboard() {
   const [monthlyExpenses, setMonthlyExpenses] = useState<monthlyData[]>([]);
 
   const { data: session, status } = useSession();
+
+  //@ts-expect-error
   const user = session?.user?.id;
 
   useEffect(() => {

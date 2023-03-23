@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { IconX, IconTrash } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 
 export default function EditModal({ hideEditModal, modalType, item }: any) {
   const [amount, setAmount] = useState(item.amount);
