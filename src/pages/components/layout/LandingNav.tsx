@@ -6,6 +6,8 @@ import {
   HomeIcon,
   BookOpenIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import Image from "next/image";
 
 const solutions = [
   {
@@ -26,10 +28,10 @@ export default function LandingNav() {
       <div className="max-w-screen">
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-0 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1 pl-10 lg:pl-10">
-            <a href="/">
+            <Link href="/">
               <span className="sr-only">Track My Funds</span>
-              <img className="h-20 sm:h-20" src="/smallLogo.jpg" alt="" />
-            </a>
+              <Image className="h-20 sm:h-20" src="/smallLogo.jpg" alt="" />
+            </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
             <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 pr-10 lg:pr-20">
@@ -38,32 +40,32 @@ export default function LandingNav() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <a
+            <Link
               href="/"
               className="text-base font-medium text-gray-500 hover:text-indigo-900"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="/about"
               className="text-base font-medium text-gray-500 hover:text-indigo-900"
             >
               About
-            </a>
+            </Link>
           </Popover.Group>
           <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
+            <Link
               href="/login"
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-indigo-900"
             >
               Log in
-            </a>
-            <a
+            </Link>
+            <Link
               href="/register"
               className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
               Register
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -85,7 +87,7 @@ export default function LandingNav() {
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <img
+                  <Image
                     className="h-20 w-auto"
                     src="/smallLogo.jpg"
                     alt="Track Your Income"
@@ -101,7 +103,7 @@ export default function LandingNav() {
               <div className="mt-6 mx-0">
                 <nav className="grid gap-y-8">
                   {solutions.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
@@ -113,27 +115,27 @@ export default function LandingNav() {
                       <span className="ml-3 text-base font-medium text-indigo-900">
                         {item.name}
                       </span>
-                    </a>
+                    </Link>
                   ))}
                 </nav>
               </div>
             </div>
             <div className="space-y-6 py-6 px-5">
               <div>
-                <a
+                <Link
                   href="/register"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-600"
                 >
                   Register
-                </a>
+                </Link>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Already have an account?{" "}
-                  <a
+                  <Link
                     href="/login"
                     className="text-indigo-600 hover:text-indigo-500"
                   >
                     Log in
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>

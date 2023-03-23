@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Privacy() {
   return (
     <section className="p-10 bg-white md:rounded-lg drop-shadow-md sm:max-w-md lg:max-w-2xl m-auto my-10">
@@ -21,12 +23,12 @@ export default function Privacy() {
         <li className="pb-2">
           If you have any questions or concerns about our privacy policy, please
           contact us at{" "}
-          <a
+          <Link
             href="https://trackmyfunds.sarahgerrard.me/contact"
             className="text-blue-500"
           >
             trackmyfunds.sarahgerrard.me/contact
-          </a>
+          </Link>
           .
         </li>
       </ul>

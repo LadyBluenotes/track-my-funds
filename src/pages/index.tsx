@@ -1,4 +1,6 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,7 +18,7 @@ export default function Home() {
           The smart way to manage your money and reach your financial goals -
           Track My Funds is a free and easy to use personal finance app.
         </p>
-        <a
+        <Link
           href="/register"
           className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-grey-600 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300"
         >
@@ -26,16 +28,16 @@ export default function Home() {
               ml: 1,
             }}
           />
-        </a>
-        <a
+        </Link>
+        <Link
           href="/about"
           className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-grey-900 border border-gray-300 rounded-lg hover:bg-indigo-600 focus:ring-4 focus:ring-gray-100 bg-indigo-500 text-white"
         >
           Learn More
-        </a>
+        </Link>
       </div>
       <div className="hidden lg:col-span-5 lg:flex h-100 pl-5 justify-center">
-        <img
+        <Image
           src="/moneyStack.jpg"
           alt="pile of cash"
           style={{

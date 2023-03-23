@@ -32,9 +32,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
         throw new Error(`Error updating ${modalType.toLowerCase()}.`);
       }
 
-      await res.status(200).json({
-        message: `${modalType} updated successfully.`,
-      });
+      await res.json();
 
     } catch (error) {
       console.error(error);

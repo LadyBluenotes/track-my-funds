@@ -47,7 +47,7 @@ export default function UserProfileModal({ hideModal }: any) {
           Profile settings
         </h2>
         <p className="mt-2 text-sm text-gray-500">
-          Update your account's settings.
+          Update your account&apos;s settings.
         </p>
         <form>
           <div className="grid gap-6 mt-4 grid-cols-2">

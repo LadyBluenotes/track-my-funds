@@ -3,6 +3,7 @@ import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import GoogleIcon from "@mui/icons-material/Google";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -36,12 +37,12 @@ export default function Login() {
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {" "}
           Already have an account?{" "}
-          <a
+          <Link
             href="/login"
             className="font-medium text-indigo-600 hover:underline"
           >
             Log in
-          </a>
+          </Link>
         </p>
       </div>
     </div>

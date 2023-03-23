@@ -41,8 +41,8 @@ export default function Example() {
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Track My Funds makes managing your money simple and stress-free.
-            Whether you're a seasoned finance expert or just starting out,
-            you'll find everything you need to take control of your finances and
+            Whether you&apos;re a seasoned finance expert or just starting out,
+            you&apos;ll find everything you need to take control of your finances and
             reach your financial goals.
           </p>
         </div>

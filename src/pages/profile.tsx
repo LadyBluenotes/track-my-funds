@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import ProtectedPage from "./components/ProtectedPage";
 import UserProfileModal from "./components/UserProfileModal";
+import Image from "next/image";
 
 export default function Profile() {
   const [edit, setEdit] = useState(false);
@@ -33,7 +34,7 @@ export default function Profile() {
             <PencilIcon className="w-5 h-5" />
           </button>
         </div>
-        <img
+        <Image
           src={ photo ? photo : "/userPhoto.jpg"}
           alt={`${session?.user?.name}'s profile photo`}
           className="w-32 h-30 mx-auto rounded-full aspect-square"

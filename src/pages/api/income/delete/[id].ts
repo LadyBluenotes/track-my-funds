@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const client = await clientPromise;
       const db = client.db("income");
 
-    const expense = await db.collection("income").deleteOne({ _id: ObjectId(req.query.id as string) });
+    const expense = await db.collection("income").deleteOne({ _id: new ObjectId(req.query.id as string) });
 
     if (expense.deletedCount === 0) {
       throw new Error("Income not found");

@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { name, amount, user, month, year } = req.body;
 
-    const expense = await db.collection("expenses").updateOne( { _id: ObjectId(req.query.id as string) }, {
+    const expense = await db.collection("expenses").updateOne( { _id: new ObjectId(req.query.id as string) }, {
       $set: {
         name: name,
         amount: amount,

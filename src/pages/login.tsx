@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import GoogleIcon from "@mui/icons-material/Google";
 import { IconBrandDiscord } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -35,20 +36,19 @@ export default function Login() {
               <GoogleIcon className="text-red-100" />
             </button>
 
-            <button className="w-full px-4 py-2 mb-4 tracking-wide text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-600">
-                <IconBrandDiscord className="mx-auto text-indigo-100" />
-              </button>
+            
+
           </div>
         </div>
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {" "}
-          Don't have an account?{" "}
-          <a
+          Don&apos;t have an account?{" "}
+          <Link
             href="/register"
             className="font-medium text-indigo-600 hover:underline"
           >
             Register here.
-          </a>
+          </Link>
         </p>
       </div>
     </div>
