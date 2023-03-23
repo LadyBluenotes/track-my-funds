@@ -8,7 +8,7 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
   const [month, setMonth] = useState(item?.month || '');
   const [year, setYear] = useState(item?.year || '');
   const [user, setUser] = useState(item?.user || '');
-  const itemID = item._id;
+  const itemID = item?._id;
 
   const handleEdit = async (e: any) => {
     e.preventDefault();
