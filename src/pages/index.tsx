@@ -3,7 +3,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 export default function Home() {
   return (
     <div
-      className="grid py-9 mx-auto lg:gap-8 xl:gap-0 sm:mt-20 lg:grid-cols-12 bg-white w-8/12 px-10 shadow-lg border border-gray-200 rounded-lg"
+      className="grid py-9 lg:gap-8 xl:gap-0 sm:mt-20 lg:grid-cols-12 bg-white w-8/12 px-10 shadow-lg border border-gray-200 md:rounded-lg w-full mt-5 md:mx-auto md:w-9/12 xl:w-8/12"
       style={{
         backdropFilter: "blur(20px)",
       }}

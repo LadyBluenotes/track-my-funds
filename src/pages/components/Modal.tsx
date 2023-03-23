@@ -59,7 +59,7 @@ export default function Modal({ hideModal, modalType, user }: any) {
       id="modal"
       table-index="-1"
       aria-hidden="true"
-      className="fixed left-0 right-0 z-50 w-full pt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-100 w-100 backdrop-blur py-5 overflow-auto mt-2/12"
+      className="fixed left-0 right-0 z-50 w-full md:pt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-100 w-100 backdrop-blur py-5 overflow-auto mt-2/12"
       style={{
         display: hideModal ? "block" : "none",
       }}

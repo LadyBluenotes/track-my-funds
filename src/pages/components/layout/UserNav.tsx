@@ -142,6 +142,7 @@ export default function LandingNav() {
                 <a
                   href="/register"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-600"
+                  onClick={() => signOut()}
                 >
                   Sign Out
                 </a>

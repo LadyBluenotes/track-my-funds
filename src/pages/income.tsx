@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import EditModal from "./components/EditModal";
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
+import { IconPencil, IconPlus } from "@tabler/icons-react";
 
 interface incomes {
   month: number;
@@ -60,7 +61,7 @@ export default function Income() {
     if (num) {
       return num.toFixed(2);
     }
-    return 0.00;
+    return 0.0;
   };
 
   useEffect(() => {
@@ -92,9 +93,9 @@ export default function Income() {
 
   const tableHeaders: any = (
     <tr>
-      <th className="px-6 py-3 text-base text-center">Date</th>
-      <th className="px-6 py-3 text-base text-center">Income</th>
-      <th className="px-6 py-3 text-base text-center">Amount</th>
+      <th className="px-5 py-3 text-base text-center">Date</th>
+      <th className="px-5 py-3 text-base text-center">Income</th>
+      <th className="px-5 py-3 text-base text-center">Amount</th>
       <th className="px-2 py-3"></th>
     </tr>
   );
@@ -121,29 +122,30 @@ export default function Income() {
       const item = income as any;
       return (
         <tr key={index} className={rowBG}>
-          <td className="px-6 py-4 whitespace-nowrap">
+          <td className="px-5 py-4 whitespace-nowrap">
             <div className="text-sm text-gray-900 text-center">
               {date(getMonth(income.month), income.year)}
             </div>
           </td>
-          <td className="px-6 py-4 whitespace-nowrap">
+          <td className="px-5 py-4 whitespace-nowrap">
             <div className="text-sm text-gray-900 text-center">
               {income.name}
             </div>
           </td>
-          <td className="px-6 py-4 whitespace-nowrap text-center">
+          <td className="px-5 py-4 whitespace-nowrap text-center">
             <div className="text-sm text-gray-900">
               ${decimalPlaces(Number(income.amount))}
             </div>
           </td>
           <td className="whitespace-nowrap text-left text-sm font-medium">
             <button
-              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-md border border-indigo-200"
+              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
               onClick={() => {
                 showEditModal(item);
               }}
             >
-              Edit
+              <div className="hidden md:inline-block">Edit</div>
+              <IconPencil className="h-5 w-5 md:hidden" />
             </button>
           </td>
         </tr>
@@ -153,30 +155,28 @@ export default function Income() {
 
   return (
     <ProtectedPage>
-      <div className="pb-20 pt-20 w-10/12 mx-auto">
+      <div className="pt-5 md:pt-10">
         {modalShow ? (
           <Modal hideModal={hideModal} modalType={"Income"} user={user} />
         ) : null}
-         {editModalShow ? (
+        {editModalShow ? (
           <EditModal
             hideEditModal={hideEditModal}
             modalType={"Income"}
             item={item}
           />
         ) : null}
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto pr-0 border border-gray-200">
+        <div className="overflow-x-auto shadow-md py-8 bg-white md:rounded-lg drop-shadow-md md:w-9/12 md:m-auto pr-0 border border-gray-200 w-full lg:mt:10">
           <table className="text-sm text-left text-gray-500 w-11/12 m-auto">
-            <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400">
+            <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100 border-b-2 border-gray-400 right-[-5px]">
+              <button
+                className="float-left p-1 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-2xl focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                type="button"
+                onClick={showModal}
+              >
+                <IconPlus className="h-5 w-5" />
+              </button>
               Incomes
-              <div>
-                <button
-                  className="float-right block w-[170px] px-2 py-2 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  type="button"
-                  onClick={showModal}
-                >
-                  Add New Income
-                </button>
-              </div>
             </caption>
             <thead className="text-xs text-gray-700 uppercase bg-grey-100 border-b-2 border-gray-400">
               {tableHeaders}

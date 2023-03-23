@@ -1,7 +1,7 @@
 import {
   BanknotesIcon,
   CreditCardIcon,
-  CurrencyDollarIcon,
+  CurrencyDollarIcon
 } from "@heroicons/react/24/solid";
 
 const features = [
@@ -27,8 +27,8 @@ const features = [
 
 export default function Example() {
   return (
-    <div className="p-10">
-      <div className="mx-auto w-fit py-6 lg:px-8 bg-white shadow-lg border border-gray-200 rounded-xl"
+    <div className="md:p-10">
+      <div className="mx-auto w-fit p-10 md:py-6 lg:px-8 bg-white shadow-lg border border-gray-200 md:rounded-xl"
        style={{
        backdropFilter: 'blur(20px)',
        }}>

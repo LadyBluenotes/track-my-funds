@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import ProtectedPage from "@/pages/components/ProtectedPage";
-import { Map } from "@mui/icons-material";
 
 interface monthlyData {
   name: string;
@@ -137,16 +136,16 @@ export default function Dashboard() {
 
       tableRows.push(
         <tr key={i} className="border-b border-gray-200">
-          <td className="px-3 py-3 text-center">
+          <td className="px-2 py-3 text-center">
             {months[Number(data.split("-")[0])]} {data.split("-")[1]}
           </td>
-          <td className="px-3 py-3 text-center bg-green-100">
+          <td className="px-2 py-3 text-center bg-green-100">
             ${decimalPlaces(dateIncome)}
           </td>
-          <td className="px-3 py-3 text-center bg-red-100">
+          <td className="px-2 py-3 text-center bg-red-100">
             ${decimalPlaces(dateExpense)}
           </td>
-          <td className="px-3 py-3 text-center">
+          <td className="px-2 py-3 text-center">
             {remained < 0 ? (
               <span className="text-red-500">
                 -$ {decimalPlaces(-remained)}
@@ -164,24 +163,24 @@ export default function Dashboard() {
 
   return (
     <ProtectedPage>
-      <div className="pb-20 pt-20">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8 bg-white rounded-lg drop-shadow-md w-9/12 m-auto border border-gray-200">
-          <table className="text-sm text-center text-gray-500 w-11/12 m-auto">
+      <div className="pt-5 md:pt-20">
+        <div className="relative overflow-x-auto shadow-md py-4 px-2 md:py-8 bg-white md:rounded-lg drop-shadow-md w-full md:w-9/12 md:m-auto border border-gray-200">
+          <table className="text-sm text-center text-gray-500 m-auto md:w-11/12">
             <caption className="pb-5 text-3xl font-semibold text-center text-indigo-600 bg-grey-100">
-              Your Financial Dashboard
+              Dashboard
             </caption>
             <thead className="text-xs text-gray-700 uppercase bg-grey-100">
               <tr className="border-b-2 border-gray-400">
                 <th className="px-0 py-3 text-base w-[120px]">Date</th>
-                <th className="px-3 py-3 text-base">Total Income</th>
-                <th className="px-3 py-3 text-base">Total Expenses</th>
-                <th className="px-3 py-3 text-base">Remaining</th>
+                <th className="px-2 py-3 text-base">Total Income</th>
+                <th className="px-2 py-3 text-base">Total Expenses</th>
+                <th className="px-2 py-3 text-base">Remaining</th>
               </tr>
             </thead>
             <tbody className="text-center">
               {tableRows.length === 0 ? (
                 <tr className="border-b border-gray-200">
-                  <td className="px-3 py-3 text-center" colSpan={4}>
+                  <td className="px-2 py-3 text-center" colSpan={4}>
                     No data to display
                   </td>
                 </tr>

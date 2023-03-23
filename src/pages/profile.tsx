@@ -23,10 +23,10 @@ export default function Profile() {
   return (
     <ProtectedPage>
       {edit ? <UserProfileModal hideModal={closeModal} /> : null}
-      <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl bg-white mx-auto mt-20 mb-40">
+      <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl bg-white mx-auto mt-10">
         <div className="flex space-x-4 justify-end">
           <button
-            className="block px-3 py-2 text-base text-indigo-600 hover:bg-indigo-700 hover:text-white rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            className="block hidden px-3 py-2 text-base text-indigo-600 hover:bg-indigo-700 hover:text-white rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
             type="button"
             onClick={editModal}
           >
