@@ -30,7 +30,10 @@ export default function LandingNav() {
           <div className="flex justify-start lg:w-0 lg:flex-1 pl-10 lg:pl-10">
             <Link href="/">
               <span className="sr-only">Track My Funds</span>
-              <Image className="h-20 sm:h-20" src="/smallLogo.jpg" alt="" />
+              <Image className="h-20 sm:h-20" src="/smallLogo.jpg" alt=""
+              width={100}
+              height={100}
+               />
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -91,6 +94,8 @@ export default function LandingNav() {
                     className="h-20 w-auto"
                     src="/smallLogo.jpg"
                     alt="Track Your Income"
+                    width={100}
+              height={100}
                   />
                 </div>
                 <div className="-mr-2">

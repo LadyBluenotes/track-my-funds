@@ -41,11 +41,11 @@ export default function Home() {
           src="/moneyStack.jpg"
           alt="pile of cash"
           style={{
-            width: "320px",
-            height: "280px",
             marginTop: "auto",
             marginBottom: "auto",
           }}
+          width={320}
+          height={280}
         />
       </div>
     </div>
