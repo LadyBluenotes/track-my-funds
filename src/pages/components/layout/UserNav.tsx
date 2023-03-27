@@ -43,9 +43,12 @@ export default function LandingNav() {
           <div className="flex justify-start lg:w-0 lg:flex-1 pl-10 lg:pl-10">
             <Link href="/">
               <span className="sr-only">Track My Funds</span>
-              <Image className="h-20 sm:h-20" src="/smallLogo.jpg" alt=""
-              width={100}
-              height={100}
+              <Image
+                className="h-20 sm:h-20"
+                src="/smallLogo.jpg"
+                alt=""
+                width={100}
+                height={100}
               />
             </Link>
           </div>
@@ -114,7 +117,7 @@ export default function LandingNav() {
                     src="/smallLogo.jpg"
                     alt="Track Your Income"
                     width={100}
-              height={100}
+                    height={100}
                   />
                 </div>
                 <div className="-mr-2">
@@ -127,32 +130,34 @@ export default function LandingNav() {
               <div className="mt-6 mx-0">
                 <nav className="grid gap-y-8">
                   {userPages.map((item) => (
-                    <Link
+                    <Popover.Button
                       key={item.name}
+                      className="text-base font-medium text-gray-500 hover:text-indigo-900"
+                      as="a"
                       href={item.href}
-                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                     >
                       <item.icon
-                        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+                        className="h-6 w-6 inline-block text-indigo-600"
                         aria-hidden="true"
                       />
                       <span className="ml-3 text-base font-medium text-indigo-900">
                         {item.name}
                       </span>
-                    </Link>
+                    </Popover.Button>
                   ))}
                 </nav>
               </div>
             </div>
             <div className="space-y-6 py-6 px-5">
               <div>
-                <Link
+                <Popover.Button
+                  as="a"
                   href="/register"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-600"
                   onClick={() => signOut()}
                 >
                   Sign Out
-                </Link>
+                </Popover.Button>
               </div>
             </div>
           </div>
