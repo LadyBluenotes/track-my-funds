@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 
-
-const EditModal = dynamic(() => import("./components/EditModal"), {ssr: false});
+const EditModal = dynamic(() => import("./components/EditModal"), {
+  ssr: false,
+});
 import Modal from "./components/Modal";
 import ProtectedPage from "./components/ProtectedPage";
 import { IconPencil, IconPlus } from "@tabler/icons-react";
@@ -186,7 +187,7 @@ export default function Expense() {
               {tableHeaders}
             </thead>
             <tbody>
-              {tableRows ? (
+              {expense?.length !== 0 ? (
                 tableRows
               ) : (
                 <tr className="border-b border-gray-200">
