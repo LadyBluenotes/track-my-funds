@@ -22,14 +22,12 @@ export default function Privacy() {
         </li>
         <li className="pb-2">
           If you have any questions or concerns about our privacy policy, please
-          contact us at{" "}
           <Link
-            href="https://trackmyfunds.sarahgerrard.me/contact"
+            href="/contact"
             className="text-blue-500"
           >
-            trackmyfunds.sarahgerrard.me/contact
+            Contact Us
           </Link>
-          .
         </li>
       </ul>
     </section>
