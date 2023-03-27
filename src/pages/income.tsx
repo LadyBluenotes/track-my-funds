@@ -89,7 +89,7 @@ export default function Income() {
   }, [user]);
 
   const getMonth = (month: number) => {
-    return months[month];
+    return months[month-1];
   };
 
   const date = (month: string, year: number) => {
