@@ -4,6 +4,10 @@ import {
   CurrencyDollarIcon
 } from "@heroicons/react/24/solid";
 
+import ContentCard from "./components/common/ContentCard";
+import Heading from "./components/common/Headings";
+import Paragraph from "./components/common/Paragraph";
+
 const features = [
   {
     name: "Tracking your income",
@@ -27,27 +31,26 @@ const features = [
 
 export default function Example() {
   return (
-    <div className="md:p-10">
-      <div className="mx-auto w-fit p-10 md:py-6 lg:px-8 bg-white shadow-lg border border-gray-200 md:rounded-xl"
-       style={{
-       backdropFilter: 'blur(20px)',
-       }}>
-        <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-lg font-semibold leading-8 tracking-tight text-indigo-600">
-            Manage money better
-          </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+    <ContentCard>
+        <div className="text-center pt-3">
+          <Heading level={6} color="indigo-600">
+            Manage money with ease
+          </Heading>
+          <Heading level={3} color="grey-800">
             Take the guess work out of your finances
-          </p>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          </Heading>
+          <div className="px-10">
+            <Paragraph>
             Track My Funds makes managing your money simple and stress-free.
             Whether you&apos;re a seasoned finance expert or just starting out,
-            you&apos;ll find everything you need to take control of your finances and
-            reach your financial goals.
-          </p>
+            you&apos;ll find everything you need to take control of your
+            finances and reach your financial goals.
+          </Paragraph>
+          </div>
+          
         </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-          <dl className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+        <div className="mx-auto my-auto px-10 pb-4">
+          <dl className="grid grid-cols-1 gap-y-6 gap-x-6 lg:max-w-none lg:grid-cols-2 lg:gap-y-10">
             {features.map((feature) => (
               <div key={feature.name} className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
@@ -66,7 +69,6 @@ export default function Example() {
             ))}
           </dl>
         </div>
-      </div>
-    </div>
+      </ContentCard>
   );
 }
