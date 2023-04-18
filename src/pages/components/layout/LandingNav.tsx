@@ -8,6 +8,8 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import PrimaryBtn from "../common/PrimaryBtn";
+import OutlineFreeBtn from "../common/OutlineFreeBtn";
 
 const myLinks = [
   {
@@ -46,32 +48,12 @@ export default function LandingNav() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <Link
-              href="/"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              About
-            </Link>
+            <OutlineFreeBtn href="/" text="Home" />
+            <OutlineFreeBtn href="/about" text="About" />
           </Popover.Group>
-          <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
-            <Link
-              href="/login"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/register"
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
-              Register
-            </Link>
+          <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0 space-x-8">
+            <OutlineFreeBtn href="/login" text="Log in" />
+            <PrimaryBtn href="/register" text="Register" />
           </div>
         </div>
       </div>
@@ -131,13 +113,7 @@ export default function LandingNav() {
             </div>
             <div className="space-y-6 py-6 px-5">
               <div>
-                <Popover.Button
-                  href="/register"
-                  as="a"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-600"
-                >
-                  Register
-                </Popover.Button>
+                <PrimaryBtn href="/register" text="Register" width="full" />
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Already have an account?{" "}
                   <Popover.Button
