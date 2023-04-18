@@ -12,19 +12,19 @@ const features = [
   {
     name: "Tracking your income",
     description:
-      "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
+      "Effortlessly manage your finances and stay informed about your funds with our intuitive and easy-to-use tracking tool.",
     icon: BanknotesIcon,
   },
   {
     name: "Manage your expenses",
     description:
-      "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
+      "Get a clear picture of your spending and take charge of your financial well-being with our comprehensive expense management tool.",
     icon: CreditCardIcon,
   },
   {
     name: "Break the cycle",
     description:
-      "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
+      "Break free from financial stress and start building a secure future with our innovative tool designed to help you break the cycle of debt and overspending.",
     icon: CurrencyDollarIcon,
   },
 ];
@@ -50,7 +50,7 @@ export default function Example() {
           
         </div>
         <div className="mx-auto my-auto px-10 pb-4">
-          <dl className="grid grid-cols-1 gap-y-6 gap-x-6 lg:max-w-none lg:grid-cols-2 lg:gap-y-10">
+          <dl className="grid grid-cols-1 gap-y-6 gap-x-4 lg:max-w-none lg:grid-cols-2">
             {features.map((feature) => (
               <div key={feature.name} className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
