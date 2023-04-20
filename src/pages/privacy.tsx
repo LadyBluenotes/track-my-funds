@@ -26,7 +26,7 @@ export default function Privacy() {
             href="/contact"
             className="text-blue-500"
           >
-            Contact Us
+           {" "} contact us.
           </Link>
         </li>
       </ul>
