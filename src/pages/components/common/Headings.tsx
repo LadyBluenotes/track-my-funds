@@ -11,7 +11,7 @@ const Heading: FC<HeadingProps> = ({ level, color, children }) => {
 
   const h1 = `mb-4 text-6xl font-extrabold tracking-tight leading-none`;
 
-  const h2 = `mb-2 text-5xl tracking-tight font-extrabold text-${color}`;
+  const h2 = `mb-4 text-5xl tracking-tight font-bold text-${color}`;
 
   const h3 = `mb-2 text-4xl font-bold text-${color}`;
 

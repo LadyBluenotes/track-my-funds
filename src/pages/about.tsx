@@ -36,7 +36,7 @@ export default function Example() {
           <Heading level={6} color="indigo-600">
             Manage money with ease
           </Heading>
-          <Heading level={3} color="grey-800">
+          <Heading level={2} color="grey-800">
             Take the guess work out of your finances
           </Heading>
           <div className="px-10">
