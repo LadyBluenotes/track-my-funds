@@ -9,7 +9,7 @@ interface HeadingProps {
 const Heading: FC<HeadingProps> = ({ level, color, children }) => {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
 
-  const h1 = `mb-4 text-6xl font-extrabold tracking-tight leading-none`;
+  const h1 = `mb-4 text-6xl font-extrabold tracking-tight leading-none text-${color}`;
 
   const h2 = `mb-4 text-5xl tracking-tight font-bold text-${color}`;
 

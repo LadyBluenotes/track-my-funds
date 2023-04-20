@@ -26,7 +26,7 @@ export default function AccountCard({ heading, subheading, bottomText, bottomLin
   return (
     <div className="pt-10 bg-gradient-to-br from-white to-indigo-200 h-[calc(100vh-150px)] overflow-auto">
       <div className=" px-10 py-10 bg-white md:rounded-lg drop-shadow-md sm:max-w-sm lg:max-w-lg m-auto text-center">
-        <Heading level={2} color={"indigo-800"}>
+        <Heading level={2} color="indigo-800">
             {heading}
         </Heading>
           <div className="relative flex py-5 items-center">
