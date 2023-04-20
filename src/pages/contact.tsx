@@ -20,7 +20,7 @@ export default function Contact() {
           </Paragraph>
         </div>
       </div>
-        
+
       <div className="px-4 sm:p-6">
         <form action="#" className="space-y-4">
           <div>
@@ -62,6 +62,6 @@ export default function Contact() {
           </div>
         </form>
       </div>
-      </ContentCard>
+    </ContentCard>
   );
 }
