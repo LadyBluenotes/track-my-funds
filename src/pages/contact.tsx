@@ -1,11 +1,12 @@
+import ContentCard from "./components/common/ContentCard";
 import Heading from "./components/common/Headings";
 import Paragraph from "./components/common/Paragraph";
 import PrimaryBtn from "./components/common/PrimaryBtn";
 
 export default function Contact() {
   return (
-    <section className="flex flex-col justify-center max-w-3xl p-2 shadow-md rounded-xl bg-white mx-auto mt-7 mb-10">
-      <div className="px-4 text-center max-w-screen-md pt-4">
+    <ContentCard>
+      <div className="text-center px-10">
         <Heading level={2} color="indigo-800">
           Contact Us <span className="text-red-600">*</span>
         </Heading>
@@ -19,6 +20,7 @@ export default function Contact() {
           </Paragraph>
         </div>
       </div>
+        
       <div className="px-4 sm:p-6">
         <form action="#" className="space-y-4">
           <div>
@@ -58,9 +60,8 @@ export default function Contact() {
           <div className="float-right">
             <PrimaryBtn href="#" text="Send Message" width="fit" />
           </div>
-          
         </form>
       </div>
-    </section>
+      </ContentCard>
   );
 }
