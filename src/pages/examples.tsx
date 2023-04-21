@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import {
-    BanknotesIcon,
-    CreditCardIcon,
-    CurrencyDollarIcon
-  } from "@heroicons/react/24/solid";
+  BanknotesIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+} from "@heroicons/react/24/solid";
 
 import ContentCard from "./components/common/ContentCard";
 import Headings from "./components/common/Headings";
@@ -14,11 +14,20 @@ import PrimaryBtn from "./components/common/PrimaryBtn";
 import Heading from "./components/common/Headings";
 
 import AccountCard from "./components/AccountCard";
+import Table from "./components/Table";
 
 export default function Examples() {
+
   return (
     <>
-        <AccountCard heading="Welcome Back!" subheading="Log in with" bottomText="Don't have an account?" bottomLink="register" bottomLinkText="Register here." />
+      <Table 
+        title="Income" 
+        tableHead={[
+          { columnName: "Income" },
+          { columnName: "Amount" }
+        ]}
+      
+      />
     </>
   );
 }

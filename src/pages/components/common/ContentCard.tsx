@@ -3,7 +3,6 @@ interface ContentCardProps {
     children: React.ReactNode;
 }
 
-
 export default function ContentCard({ children }: ContentCardProps) {
 
     return (
