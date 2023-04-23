@@ -10,7 +10,7 @@ import PrimaryBtn from "./components/common/PrimaryBtn";
 export default function Home() {
   return (
     <ContentCard>
-      <div className="flex flex-col md:flex-row -mx-10 md:-mx-20">
+      <div className="flex flex-col md:flex-row lg:pl-5">
         <div className="pl-5 py-3 order-2 md:order-1 mt-4 mx-2">
           <Headings level={1} color="text-gray-900">
             Empower your money management

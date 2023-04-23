@@ -250,7 +250,7 @@ export default function Table({ title, tableHead }: TableProps) {
         />
       ) : null}
       <ContentCard>
-        <table className="text-sm text-center text-gray-500 m-auto w-full border-b-2 border-y-2 border-gray-300">
+        <table className="text-sm text-center text-gray-500 mx-auto border-b-2 border-y-2 border-gray-300 w-11/12">
           {title !== "Dashboard" ? (
             <caption>
               <div className="flex justify-end">
