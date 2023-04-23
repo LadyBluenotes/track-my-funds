@@ -1,9 +1,11 @@
+import ProtectedPage from "./components/ProtectedPage";
 import Table from "./components/Table";
 
 export default function Income() {
 
   return (
-    <Table 
+    <ProtectedPage>
+      <Table 
         title="Income" 
         tableHead={[
           { columnName: "Income Source" },
@@ -11,5 +13,6 @@ export default function Income() {
         ]}
       
       />
+    </ProtectedPage>
   );
 }

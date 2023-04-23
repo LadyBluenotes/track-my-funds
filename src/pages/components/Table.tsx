@@ -5,11 +5,13 @@ import { useSession } from "next-auth/react";
 import { IconPlus } from "@tabler/icons-react";
 
 import Heading from "./common/Headings";
-import ProtectedCard from "./common/ProtectedCard";
+import ContentCard from "./common/ContentCard";
 const EditModal = dynamic(() => import("./EditModal"), {
   ssr: false,
 });
-import Modal from "./Modal";
+const Modal = dynamic(() => import("./Modal"), {
+  ssr: false,
+});
 
 interface TableProps {
   title: string;
@@ -200,40 +202,36 @@ export default function Table({ title, tableHead }: TableProps) {
     });
   }
 
-    if (title === "Income" || title === "Expense") {
-        const data = title === "Income" ? monthlyIncomes : monthlyExpenses;
+  if (title === "Income" || title === "Expenses") {
+    const data = title === "Income" ? monthlyIncomes : monthlyExpenses;
 
-        data.sort(sortMonthlyData);
+    data.sort(sortMonthlyData);
 
-        data.forEach((item, index) => {
-            tableRows.push(
-                <tr key={index} className="border-b border-gray-200">
-                    <td className="px-2 py-3">
-                        {months[item.month-1]} {item.year}
-                    </td>
-                    <td className="px-2 py-3">
-                        {item.name}
-                    </td>
-                    <td className="px-2 py-3">
-                        ${decimalPlaces(item.amount)}
-                    </td>
-                    <td className="px-2 py-3">
-                        <button
-                            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
-                            onClick={() => showEditModal(item)}
-                        >
-                            Edit
-                        </button>
-                    </td>
-                </tr>
-            );
-        });
-    }
+    data.forEach((item, index) => {
+      tableRows.push(
+        <tr key={index} className="border-b border-gray-200">
+          <td className="px-2 py-3">
+            {months[item.month - 1]} {item.year}
+          </td>
+          <td className="px-2 py-3">{item.name}</td>
+          <td className="px-2 py-3">${decimalPlaces(item.amount)}</td>
+          <td className="px-2 py-3">
+            <button
+              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
+              onClick={() => showEditModal(item)}
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  }
 
   const renderTableHead = () => {
     const updatedTableHead = [{ columnName: "Date" }, ...tableHead];
-    if (title === "Income" || title === "Expense") {
-        updatedTableHead.push({ columnName: "" });
+    if (title === "Income" || title === "Expenses") {
+      updatedTableHead.push({ columnName: "" });
     }
 
     return updatedTableHead.map((item, index) => {
@@ -251,16 +249,20 @@ export default function Table({ title, tableHead }: TableProps) {
   return (
     <>
       {modalShow ? (
-        <Modal hideModal={hideModal} modalType={"Income"} user={user} />
+        <Modal
+          hideModal={hideModal}
+          modalType={title === "Expenses" ? "Expense" : title}
+          user={user}
+        />
       ) : null}
       {editModalShow ? (
         <EditModal
           hideEditModal={hideEditModal}
-          modalType={"Income"}
+          modalType={title === "Expenses" ? "Expense" : title}
           item={item}
         />
       ) : null}
-      <ProtectedCard>
+      <ContentCard>
         <table className="text-sm text-center text-gray-500 m-auto w-full">
           {title !== "Dashboard" ? (
             <caption>
@@ -303,7 +305,7 @@ export default function Table({ title, tableHead }: TableProps) {
             )}
           </tbody>
         </table>
-      </ProtectedCard>
+      </ContentCard>
     </>
   );
 }
