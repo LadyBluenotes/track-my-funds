@@ -10,7 +10,7 @@ export default function ContentCard({ children }: ContentCardProps) {
         style={{
           backdropFilter: "blur(20px)",
         }}>
-            <div className="place-self-center w-10/12">
+            <div className="place-self-center w-11/12 py-2">
             {children}
             </div>
         </div>
