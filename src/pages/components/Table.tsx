@@ -133,8 +133,6 @@ export default function Table({ title, tableHead }: TableProps) {
     "December",
   ];
 
-
-
   if (title === "Dashboard") {
     const usedDates: any = {};
 
@@ -202,8 +200,41 @@ export default function Table({ title, tableHead }: TableProps) {
     });
   }
 
+    if (title === "Income" || title === "Expense") {
+        const data = title === "Income" ? monthlyIncomes : monthlyExpenses;
+
+        data.sort(sortMonthlyData);
+
+        data.forEach((item, index) => {
+            tableRows.push(
+                <tr key={index} className="border-b border-gray-200">
+                    <td className="px-2 py-3">
+                        {months[item.month-1]} {item.year}
+                    </td>
+                    <td className="px-2 py-3">
+                        {item.name}
+                    </td>
+                    <td className="px-2 py-3">
+                        ${decimalPlaces(item.amount)}
+                    </td>
+                    <td className="px-2 py-3">
+                        <button
+                            className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
+                            onClick={() => showEditModal(item)}
+                        >
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            );
+        });
+    }
+
   const renderTableHead = () => {
     const updatedTableHead = [{ columnName: "Date" }, ...tableHead];
+    if (title === "Income" || title === "Expense") {
+        updatedTableHead.push({ columnName: "" });
+    }
 
     return updatedTableHead.map((item, index) => {
       return (
@@ -218,7 +249,7 @@ export default function Table({ title, tableHead }: TableProps) {
   };
 
   return (
-    <ProtectedCard>
+    <>
       {modalShow ? (
         <Modal hideModal={hideModal} modalType={"Income"} user={user} />
       ) : null}
@@ -229,48 +260,50 @@ export default function Table({ title, tableHead }: TableProps) {
           item={item}
         />
       ) : null}
-      <table className="text-sm text-center text-gray-500 m-auto w-full">
-        {title !== "Dashboard" ? (
-          <caption>
-            <div className="flex justify-end">
-              <button
-                className="p-1 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-2xl focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                type="button"
-                onClick={showModal}
-              >
-                <IconPlus className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="-mt-4">
+      <ProtectedCard>
+        <table className="text-sm text-center text-gray-500 m-auto w-full">
+          {title !== "Dashboard" ? (
+            <caption>
+              <div className="flex justify-end">
+                <button
+                  className="p-1 text-base text-white bg-indigo-600 hover:bg-indigo-700 border rounded-2xl focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  type="button"
+                  onClick={showModal}
+                >
+                  <IconPlus className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="-mt-4">
+                <Heading level={1} color={"indigo-600"}>
+                  {title}
+                </Heading>
+              </div>
+            </caption>
+          ) : (
+            <caption>
               <Heading level={1} color={"indigo-600"}>
                 {title}
               </Heading>
-            </div>
-          </caption>
-        ) : (
-          <caption>
-            <Heading level={1} color={"indigo-600"}>
-              {title}
-            </Heading>
-          </caption>
-        )}
-        <thead className="text-gray-700 uppercase bg-grey-100">
-          <tr className="border-b-2 border-gray-400 w-fit">
-            {renderTableHead()}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-300">
-          {tableRows.length === 0 ? (
-            <tr className="border-b border-gray-200">
-              <td className="px-2 py-3 text-center" colSpan={4}>
-                No data to display
-              </td>
-            </tr>
-          ) : (
-            tableRows
+            </caption>
           )}
-        </tbody>
-      </table>
-    </ProtectedCard>
+          <thead className="text-gray-700 uppercase bg-grey-100">
+            <tr className="border-b-2 border-gray-400 w-fit">
+              {renderTableHead()}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-300">
+            {tableRows.length === 0 ? (
+              <tr className="border-b border-gray-200">
+                <td className="px-2 py-3 text-center" colSpan={4}>
+                  No data to display
+                </td>
+              </tr>
+            ) : (
+              tableRows
+            )}
+          </tbody>
+        </table>
+      </ProtectedCard>
+    </>
   );
 }

@@ -36,8 +36,8 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
         </button>
         <div className="text-center">
           <Heading level={3} color="indigo-600">
-          Update {modalType}
-        </Heading>
+            Update {modalType}
+          </Heading>
         </div>
         <form className="mx-5">
           <div className="mb-2 space-y-2">
@@ -121,32 +121,34 @@ export default function EditModal({ hideEditModal, modalType, item }: any) {
                 window.location.reload();
               }}
             />
-          <FunctionBtn
-            text="Delete"
-            type="submit"
-            onClick={async (e) => {
-              e.preventDefault();
-              try {
-                const response = await fetch(
-                  `/api/${modalType.toLowerCase()}/delete/${itemID}`,
-                  {
-                    method: "DELETE",
+            <div className="flex justify-end">
+              <FunctionBtn
+                text="Delete"
+                type="submit"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    const response = await fetch(
+                      `/api/${modalType.toLowerCase()}/delete/${itemID}`,
+                      {
+                        method: "DELETE",
+                      }
+                    );
+                    if (!response.ok) {
+                      throw new Error(
+                        `Failed to delete ${modalType.toLowerCase()}.`
+                      );
+                    }
+                    const data = await response.json();
+                    console.log(data.message);
+                  } catch (error) {
+                    console.error(error);
                   }
-                );
-                if (!response.ok) {
-                  throw new Error(
-                    `Failed to delete ${modalType.toLowerCase()}.`
-                  );
-                }
-                const data = await response.json();
-                console.log(data.message);
-              } catch (error) {
-                console.error(error);
-              }
-              hideEditModal();
-              window.location.reload();
-            }}
-          />
+                  hideEditModal();
+                  window.location.reload();
+                }}
+              />
+            </div>
           </div>
         </form>
       </div>

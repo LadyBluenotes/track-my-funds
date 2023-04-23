@@ -22,7 +22,11 @@ export default function FunctionBtn({ type, onClick, text }: FunctionBtnProps) {
     <>
       <button
         type={type}
-        className={`w-full px-4 py-2 mt-0 text-white focus:outline-none rounded-lg ${text === "Update" ? "bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500" : "bg-red-600 hover:bg-red-500 focus:bg-red-500 "}`}
+        className={`px-4 py-2 mt-0 text-white focus:outline-none rounded-lg ${
+          text === "Delete" ? "w-full bg-red-600 hover:bg-red-500 focus:bg-red-500" 
+          : text === "Update" ? "w-full bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500"
+          : "bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 w-fit" 
+        }`}
         onClick={onClick}
       >
         {text}

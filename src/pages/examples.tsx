@@ -1,4 +1,4 @@
-import React from "react";
+import React, { } from "react";
 import Image from "next/image";
 import {
   BanknotesIcon,
@@ -23,7 +23,7 @@ export default function Examples() {
       <Table 
         title="Income" 
         tableHead={[
-          { columnName: "Income" },
+          { columnName: "Income Source" },
           { columnName: "Amount" }
         ]}
       

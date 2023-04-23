@@ -36,7 +36,7 @@ export default function Modal({ hideModal, modalType, user }: any) {
           </Heading>
         </div>
         <form className="mx-5">
-          <div className="mb-2 space-y-2">
+          <div className="mb-5 space-y-2">
             <Input
               inputName={modalType}
               placeholder={modalType === "Income" ? "eg. Salary" : "eg. Rent"}
@@ -78,7 +78,8 @@ export default function Modal({ hideModal, modalType, user }: any) {
               type="number"
             />
           </div>
-          <FunctionBtn
+          <div className="flex justify-end">
+            <FunctionBtn
             text="Submit"
             type="submit"
             onClick={async (e) => {
@@ -122,6 +123,8 @@ export default function Modal({ hideModal, modalType, user }: any) {
               window.location.reload();
             }}
           />
+          </div>
+          
         </form>
       </div>
     </div>
