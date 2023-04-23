@@ -1,5 +1,5 @@
 
-interface ContentCardProps {
+export interface ContentCardProps {
     children: React.ReactNode;
 }
 

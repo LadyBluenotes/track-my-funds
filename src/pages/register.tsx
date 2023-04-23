@@ -1,8 +1,25 @@
-import AccountCard from "./components/AccountCard";
+import AccountCard, { AccountCardProps } from "./components/AccountCard";
 
-export default function Login() {
+interface Props {
+  accountCardProps: AccountCardProps;
+}
 
+export default function LoginPage({ accountCardProps }: Props) {
   return (
-    <AccountCard heading="Register for an account" subheading="Sign up with" bottomText="Already have an account?" bottomLink="/login" bottomLinkText="Log in here." />
+    <div>
+      <AccountCard {...accountCardProps} />
+    </div>
   );
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      accountCardProps: {
+        heading: "Register for an account",
+        subheading: "Sign up with",
+        bottomText: "Already have an account?",
+      },
+    },
+  };
 }

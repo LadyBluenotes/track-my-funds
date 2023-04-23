@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 
-interface HeadingProps {
+export interface HeadingProps {
   level: number;
   color: string;
   children: ReactNode;

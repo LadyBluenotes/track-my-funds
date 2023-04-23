@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 
-interface FunctionBtnProps {
+export interface FunctionBtnProps {
     type?: "button" | "submit";
     text: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;

@@ -13,7 +13,7 @@ const Modal = dynamic(() => import("./Modal"), {
   ssr: false,
 });
 
-interface TableProps {
+export interface TableProps {
   title: string;
   tableHead: TableHeadProps[];
 }
@@ -31,9 +31,6 @@ interface TableBodyProps {
 }
 
 function decimalPlaces(num: any) {
-
-  // make to 2 decimal places and add a comma every 3 digits (e.g. 1,000.00)
-
   if(num) {
     return parseFloat(num).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
@@ -216,11 +213,15 @@ export default function Table({ title, tableHead }: TableProps) {
   }
 
   const renderTableHead = () => {
+    if (!Array.isArray(tableHead) || !tableHead.every(obj => obj.columnName)) {
+      return null;
+    }
+  
     const updatedTableHead = [{ columnName: "Date" }, ...tableHead];
     if (title === "Income" || title === "Expenses") {
       updatedTableHead.push({ columnName: "" });
     }
-
+  
     return updatedTableHead.map((item, index) => {
       return (
         <th

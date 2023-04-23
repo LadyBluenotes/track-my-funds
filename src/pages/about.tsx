@@ -29,7 +29,7 @@ const features = [
   },
 ];
 
-export default function Example() {
+export default function About() {
   return (
     <ContentCard>
         <div className="text-center pt-3">
