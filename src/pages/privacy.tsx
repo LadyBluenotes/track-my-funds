@@ -14,7 +14,7 @@ export default function Privacy() {
         Last updated: February 18, 2023
       </p>
       </div>
-      <ul className="list-disc list-inside">
+      <ul className="list-disc list-inside mx-5">
         <li className="pb-2">
           Under no circumstances will we sell or distribute your data to third
           parties unless you have explicitly asked us to.
