@@ -39,7 +39,7 @@ export default function Profile() {
           height={128}
         />
         <div className="space-y-4 text-center divide-y divide-gray-700">
-          <div className="my-5 space-y-1">
+          <div className="pt-5 space-y-1">
             <h2 className="text-xl font-semibold sm:text-2xl">{session?.user?.name}</h2>
             <p className="px-5 text-xs sm:text-base">{session?.user?.email}</p>
           </div>
