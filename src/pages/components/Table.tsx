@@ -31,26 +31,13 @@ interface TableBodyProps {
 }
 
 function decimalPlaces(num: any) {
-  if (num) {
-    return parseInt(num).toFixed(2);
+
+  // make to 2 decimal places and add a comma every 3 digits (e.g. 1,000.00)
+
+  if(num) {
+    return parseFloat(num).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
   return parseInt("0").toFixed(2);
-}
-
-function getMonthlyTotal(data: TableBodyProps[], month: number) {
-  const total = data
-    .filter((item) => item.month === month)
-    .reduce((acc, item) => {
-      return acc + item.amount;
-    }, 0);
-  return total;
-}
-
-function getTotal(data: TableBodyProps[]) {
-  const total = data.reduce((acc, item) => {
-    return acc + item.amount;
-  }, 0);
-  return decimalPlaces(total);
 }
 
 function sortMonthlyData(a: TableBodyProps, b: TableBodyProps) {
@@ -177,16 +164,16 @@ export default function Table({ title, tableHead }: TableProps) {
 
       tableRows.push(
         <tr key={i} className="border-b border-gray-200">
-          <td className="px-2 py-3 text-center">
+          <td className="px-2 py-3">
             {months[Number(data.split("-")[0])]} {data.split("-")[1]}
           </td>
-          <td className="px-2 py-3 text-center bg-green-100">
+          <td className="px-2 py-3 bg-green-100">
             ${decimalPlaces(dateIncome)}
           </td>
-          <td className="px-2 py-3 text-center bg-red-100">
+          <td className="px-2 py-3 bg-red-100">
             ${decimalPlaces(dateExpense)}
           </td>
-          <td className="px-2 py-3 text-center">
+          <td className="px-2 py-3">
             {remained < 0 ? (
               <span className="text-red-500">
                 -$ {decimalPlaces(-remained)}
@@ -209,15 +196,15 @@ export default function Table({ title, tableHead }: TableProps) {
 
     data.forEach((item, index) => {
       tableRows.push(
-        <tr key={index} className="border-b border-gray-200">
-          <td className="px-2 py-3">
+        <tr key={index} className="border-b border-gray-200 text-gray-700">
+          <td>
             {months[item.month - 1]} {item.year}
           </td>
-          <td className="px-2 py-3">{item.name}</td>
-          <td className="px-2 py-3">${decimalPlaces(item.amount)}</td>
-          <td className="px-2 py-3">
+          <td>{item.name}</td>
+          <td>${decimalPlaces(item.amount)}</td>
+          <td className="p-1">
             <button
-              className="text-indigo-600 hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
+              className="text-indigo-700 font-semibold hover:text-indigo-900 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-md border border-indigo-200 md:px-4"
               onClick={() => showEditModal(item)}
             >
               Edit
@@ -238,7 +225,7 @@ export default function Table({ title, tableHead }: TableProps) {
       return (
         <th
           key={index}
-          className="px-3 md:px-6 lg:px-12 py-3 border-y-2 border-gray-300 text-sm"
+          className="px-3 md:px-6 lg:px-12 py-3 border-y-2 border-gray-300 text-sm text-gray-800"
         >
           {item.columnName}
         </th>

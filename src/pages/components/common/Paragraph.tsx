@@ -5,7 +5,7 @@ interface ParagraphProps {
 
 export default function Paragraph({ children }: ParagraphProps) {
   return (
-    <p className={`mb-4 lg:mb-8 text-gray-600 md:text-lg lg:text-xl`}>
+    <p className={`mb-4 lg:mb-8 text-gray-600 lg:text-lg`}>
         {children}
     </p>
   );
