@@ -10,14 +10,13 @@ import PrimaryBtn from "./components/common/PrimaryBtn";
 export default function Home() {
   return (
     <ContentCard>
-      <div className="flex flex-col md:flex-row">
-        <div className="pl-5 py-3 order-2 md:order-1 mt-4">
+      <div className="flex flex-col md:flex-row lg:pl-5">
+        <div className="pl-5 py-3 order-2 md:order-1 mt-4 mx-2">
           <Headings level={1} color="text-gray-900">
             Empower your money management
           </Headings>
           <Paragraph>
-            The smart way to manage your money and reach your financial goals -
-            Track My Funds is a free and easy to use personal finance app.
+          Track My Funds is a free, user-friendly personal finance app that helps you easily manage your money and achieve your financial goals.
           </Paragraph>
           <div className="space-x-8">
             <OutlineFreeBtn href="/register" text="Get Started" />
@@ -25,7 +24,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-fit md:w-4/6 flex py-auto order-1 md:order-2 mx-auto">
+        <div className="hidden w-fit md:w-4/6 md:flex py-auto order-1 md:order-2 mx-auto">
           <Image
             src="/moneyStack.jpg"
             alt="pile of cash"

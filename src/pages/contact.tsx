@@ -1,17 +1,27 @@
+import ContentCard from "./components/common/ContentCard";
+import Heading from "./components/common/Headings";
+import Paragraph from "./components/common/Paragraph";
+import PrimaryBtn from "./components/common/PrimaryBtn";
+
 export default function Contact() {
   return (
-    <section className="flex flex-col justify-center max-w-3xl p-2 shadow-md rounded-xl bg-white mx-auto mt-7 mb-10">
-      <div className="py-3 lg:py-8 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-2 text-4xl tracking-tight font-extrabold text-center text-indigo-800">
+    <ContentCard>
+      <div className="text-center px-10">
+        <Heading level={2} color="indigo-800">
           Contact Us <span className="text-red-600">*</span>
-          <p className="text-xs font-normal text-red-500">
-            This form is not functional.
-          </p>
-        </h2>
-        <p className="mb-2 lg:mb-8 font-light text-center text-gray-500  sm:text-xl">
-          Got a technical issue? Want to send feedback? Any other questions? Let
-          us know.
+        </Heading>
+        <p className="text-xs font-normal text-red-500">
+          This form is not functional.
         </p>
+        <div className="mt-4 px-10 -mb-6">
+          <Paragraph>
+            Got a technical issue? Want to send feedback? Any other questions?
+            Let us know.
+          </Paragraph>
+        </div>
+      </div>
+
+      <div className="px-4 sm:p-6">
         <form action="#" className="space-y-4">
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-900">
@@ -47,15 +57,11 @@ export default function Contact() {
               placeholder="Leave a comment..."
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="float-right py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-indigo-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:bg-indigo-700"
-            onClick={() => alert("This form is not functional.")}
-          >
-            Send message
-          </button>
+          <div className="float-right">
+            <PrimaryBtn href="#" text="Send Message" width="fit" />
+          </div>
         </form>
       </div>
-    </section>
+    </ContentCard>
   );
 }

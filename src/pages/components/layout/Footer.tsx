@@ -19,7 +19,7 @@ export default function Footer() {
             <OutlineFreeBtn href="/contact" text="Contact" color="text-gray-500"/>
           </div>
         </nav>
-        <p className="mt-5 text-base leading-6 text-center text-gray-500">
+        <p className="mt-5 text-base leading-6 text-center text-gray-400">
           © 2023 Track My Funds. All rights reserved.
         </p>
       </div>

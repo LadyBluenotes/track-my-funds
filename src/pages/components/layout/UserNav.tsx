@@ -8,9 +8,12 @@ import {
   CreditCardIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+
 import Image from "next/image";
+import OutlineFreeBtn from "../common/OutlineFreeBtn";
+import FunctionBtn from "../common/FunctionBtn";
 
 const userPages = [
   {
@@ -59,38 +62,13 @@ export default function LandingNav() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <Link
-              href="/dashboard"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/income"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Income
-            </Link>
-            <Link
-              href="/expenses"
-              className="text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Expenses
-            </Link>
+            <OutlineFreeBtn href="/dashboard" text="Dashboard" />
+            <OutlineFreeBtn href="/income" text="Income" />
+            <OutlineFreeBtn href="/expenses" text="Expenses" />
           </Popover.Group>
           <div className="hidden pr-10 items-center justify-end md:flex md:flex-1 lg:w-0">
-            <Link
-              href="/profile"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-indigo-900"
-            >
-              Profile
-            </Link>
-            <button
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-              onClick={() => signOut()}
-            >
-              Sign out
-            </button>
+            <OutlineFreeBtn href="/profile" text="Profile" />
+            <FunctionBtn text="Sign Out"/>
           </div>
         </div>
       </div>

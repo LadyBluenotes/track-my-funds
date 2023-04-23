@@ -1,13 +1,20 @@
 import Link from "next/link";
+import Heading from "./components/common/Headings";
+import ContentCard from "./components/common/ContentCard";
 
 export default function Privacy() {
+  
   return (
-    <section className="p-10 bg-white md:rounded-lg drop-shadow-md sm:max-w-md lg:max-w-2xl m-auto my-10">
-      <h1 className="text-4xl font-bold text-center pb-2">Privacy Policy</h1>
+    <ContentCard>
+      <div className="text-center">
+      <Heading level={1} color={"black"}>
+        Privacy Policy
+      </Heading>
       <p className="text-center pb-10 text-gray-500">
         Last updated: February 18, 2023
       </p>
-      <ul className="list-disc list-inside">
+      </div>
+      <ul className="list-disc list-inside mx-5">
         <li className="pb-2">
           Under no circumstances will we sell or distribute your data to third
           parties unless you have explicitly asked us to.
@@ -30,6 +37,6 @@ export default function Privacy() {
           </Link>
         </li>
       </ul>
-    </section>
+    </ContentCard>
   );
 }
